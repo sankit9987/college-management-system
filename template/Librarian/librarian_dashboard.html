@@ -1,0 +1,79 @@
+{% extends 'Librarian/base.html' %}
+
+{% block title %}Dashboard{% endblock title %}
+
+
+{% block body %}
+<section class="py-4">
+    {% if messages %}
+        <div id="alert" class="alert alert-success text-center" role="alert">
+            {% for msg in messages %} 
+                <h6 class="alert-heading">{{msg}}</h6>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="container-fluid">
+        <div class="row align-items-stretch gy-4">
+            <div class="col-lg-4">
+                <!-- Income-->
+                <div class="card text-center h-100 mb-0">
+                    <div class="card-body">
+                        <svg class="svg-icon svg-icon-big svg-icon-light mb-4 text-muted">
+                            <use xlink:href="#sales-up-1"> </use>
+                        </svg>
+                        <p class="text-gray-700 display-6">126,418</p>
+                        <p class="text-primary h2 fw-bold">All Income</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Income-->
+                <div class="card text-center h-100 mb-0">
+                    <div class="card-body">
+                        <svg class="svg-icon svg-icon-big svg-icon-light mb-4 text-muted">
+                            <use xlink:href="#sales-up-1"> </use>
+                        </svg>
+                        <p class="text-gray-700 display-6">126,418</p>
+                        <p class="text-primary h2 fw-bold">All Income</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Income-->
+                <div class="card text-center h-100 mb-0">
+                    <div class="card-body">
+                        <svg class="svg-icon svg-icon-big svg-icon-light mb-4 text-muted">
+                            <use xlink:href="#sales-up-1"> </use>
+                        </svg>
+                        <p class="text-gray-700 display-6">126,418</p>
+                        <p class="text-primary h2 fw-bold">All Income</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<section>
+    <div class="container-fluid">
+        <div class="row align-items-stretch gy-4">
+            <div class="col-lg-4">
+                <!-- Income-->
+                <div class="card text-center h-100 mb-0">
+                    <div class="card-body">
+                        <svg class="svg-icon svg-icon-big svg-icon-light mb-4 text-muted">
+                            <use xlink:href="#sales-up-1"> </use>
+                        </svg>
+                        <p class="text-gray-700 display-6">126,418</p>
+                        <p class="text-primary h2 fw-bold">All Income</p>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock body %}

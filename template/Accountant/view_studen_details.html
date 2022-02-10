@@ -1,0 +1,78 @@
+{% extends 'Accountant/base.html' %}
+{% for student in student %}
+{% block title %}{{student.name}}{% endblock title %}
+{% block body %}
+<div class="bg-gray-200 text-sm">
+	<div class="container-fluid">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb mb-0 py-3">
+				<li class="breadcrumb-item"><a class="fw-light" href="{% url 'Hod_dashboard' %}">Home</a></li>
+				<li class="breadcrumb-item " aria-current="page"><a class="fw-light"
+						href="{% url 'view_student' %}">View Student</a>
+				</li>
+				<li class="breadcrumb-item active fw-light" aria-current="page"><b>{{student.name}}</b>
+				</li>
+			</ol>
+		</nav>
+	</div>
+</div>
+<div class="container">
+	<div class="card">
+		<h2 class="card-title mx-5 mt-3 text-success">Update Student</h2>
+		<div class="card-body">
+			<form action="" method="POST" onsubmit="return pcheck2()" enctype= multipart/form-data>
+				{% csrf_token %}
+			<div class="mb-3">
+				<label class="form-label" for="Name">Name</label>
+				<input class="form-control" value="{{student.name}}" placeholder="Enter Full Name" name="Name" id="Name" type="text" aria-describedby="namehelp">
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="address">Address</label>
+				<input class="form-control" value="{{student.Address}}" placeholder="Enter Address" name="address" id="address" type="text" aria-describedby="addressHelp">
+			</div>
+			<div class="mb-3">
+				<label class="col-sm-3 form-label" for="gender">Gender</label>
+				<select class="form-select mb-3" name="gender" id="gender" name="gender">
+					<option>{{student.Gender}}</option>
+					<option>Male</option>
+					<option>Female</option>
+					<option>Other</option>
+				</select>
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="bod">Date of Birth</label>
+				<input class="form-control datepicker" value="{{student.date_of_birth|date:"Y-m-d"}}" placeholder="Enter Birth of Date" autocomplete="off" name="dob" id="dob" type="text" aria-describedby="dobHelp">
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="mobile">Mobile Number</label>
+				<input class="form-control" value="{{student.mobile_no}}" maxlength="10" placeholder="Enter Mobile Number" name="mobile" id="mobile" type="number" maxlength=10 aria-describedby="phoneHelp">
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="email">Email address</label>
+				<input class="form-control" readonly value="{{student.email}}" placeholder="Enter Email Address" name="email" id="email" type="email" aria-describedby="emailHelp">
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="department">Department</label>
+				<select class="form-select mb-3" disabled="true"  required name="department" id="department" name="department">
+					<option>{{student.department}}</option>
+				</select>
+			</div>
+			<div class="mb-3">
+				<label class="col-sm-3 form-label" for="year">Year</label>
+				<select class="form-select mb-3" required  id="year" name="year">
+					<option>{{student.year}}</option>
+					{% for i in year %}
+					<option>{{i.name}}</option>
+					{% endfor %}
+				</select>
+			</div>			
+			<div class="mb-3">
+				<button class="btn btn-primary float-right" type="submit">Update</button>
+			</div>
+		</form>
+		</div>
+	</div>
+</div>
+
+{% endblock body %}
+{% endfor %}

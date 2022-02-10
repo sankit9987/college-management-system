@@ -1,0 +1,55 @@
+{% extends 'Hod/base.html' %}
+{% block title %}Edit{% endblock title %}
+{% block body %}
+<div class="container">
+	<div class="card">
+		<h2 class="card-title mx-5 mt-3 text-success">Edit </h2>
+		<div class="card-body">
+			<form action="" method="POST" onsubmit="return pcheck2()" enctype= multipart/form-data>
+				{% csrf_token %}
+				<div class="mb-3">
+					<label class="form-label" for="Name">Name</label>
+					<input class="form-control" value="{{request.user.name}}" placeholder="Enter Full Name" name="Name" id="Name" type="text" aria-describedby="namehelp">
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="address">Address</label>
+					<input class="form-control" value="{{request.user.Address}}" placeholder="Enter Address" name="address" id="address" type="text" aria-describedby="addressHelp">
+				</div>
+				<div class="mb-3">
+					<label class="col-sm-3 form-label" for="gender">Gender</label>
+					<select class="form-select mb-3" name="gender" id="gender" name="gender">
+						<option>{{request.user.Gender}}</option>
+						<option>Male</option>
+						<option>Female</option>
+						<option>Other</option>
+					</select>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="bod">Date of Birth</label>
+					<input class="form-control datepicker" value="{{request.user.date_of_birth|date:"Y-m-d"}}" placeholder="Enter Birth of Date" autocomplete="off" name="dob" id="dob" type="text" aria-describedby="dobHelp">
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="mobile">Mobile Number</label>
+					<input class="form-control" value="{{request.user.mobile_no}}" maxlength="10" placeholder="Enter Mobile Number" name="mobile" id="mobile" type="number" maxlength=10 aria-describedby="phoneHelp">
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="email">Email address</label>
+					<input class="form-control" readonly value="{{request.user.email}}" placeholder="Enter Email Address" name="email" id="email" type="email" aria-describedby="emailHelp">
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="password">New Password</label>
+					<input class="form-control" placeholder="Enter password" name="password" onkeyup="pcheck()" id="password" type="text" aria-describedby="qualificationHelp">
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="exampleInputEmail1">Confirm Password</label>
+					<input class="form-control"  placeholder="Enter Password again" name="salary" onkeyup="pcheck()" id="cpassword" aria-describedby="emailHelp">
+					<p class="form-label text-danger my-3" id="error" for="cpassword"></p>
+				</div>
+				<div class="mb-3">
+					<button class="btn btn-primary float-right" type="submit">Update</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock body %}

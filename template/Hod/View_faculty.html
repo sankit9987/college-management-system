@@ -1,0 +1,66 @@
+{% extends 'Hod/base.html' %}
+{% block title %}View Faculty{% endblock title %}
+{% block body %}
+
+<div class="bg-gray-200 text-sm">
+  <div class="container-fluid">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 py-3">
+        <li class="breadcrumb-item"><a class="fw-light" href="{% url 'Hod_dashboard' %}">Home</a></li>
+        <li class="breadcrumb-item active fw-light" aria-current="page"><b>View Faculty</b> </li>
+      </ol>
+    </nav>
+  </div>
+</div>
+{% if messages %}
+<div id="alert" class="alert alert-success text-center" role="alert">
+  {% for msg in messages %}
+  <h6 class="alert-heading">{{msg}}</h6>
+  {% endfor %}
+</div>
+{% endif %}
+<div class="card-body">
+  <a href="{% url 'add_faculty' %}" class="btn btn-primary " type="button" style="border-radius: 20px"><i
+      class="fa fa-plus-circle" aria-hidden="true"></i> Add
+  </a>
+</div>
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header border-bottom">
+      <h3 class="h4 mb-0">All Faculty</h3>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table text-sm mb-0 data">
+          <thead>
+            <tr>
+              <th>Sr No.</th>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Mobile Number</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for faculty in faculty %}
+
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td>{{faculty.name}}</td>
+              <td>{{faculty.Gender}}</td>
+              <td>{{faculty.mobile_no}}</td>
+              <td>
+                  <a href="{% url 'Faculty' faculty.id %}" aria-hidden="true" style="color:black;"
+                  title="Update Faculty">
+                    <i class="fa fa-eye"></i>
+                  </a>&nbsp&nbsp&nbsp
+                  <a href="{% url 'Delete_faclty' faculty.id %}" style="color:black;" title="Delete Faculty"><i
+                    class="fa fa-trash" aria-hidden="true" onclick="return confirm('Are you sure you want to remove')"></a></i></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% endblock body %}

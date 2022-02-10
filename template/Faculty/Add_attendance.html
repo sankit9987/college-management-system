@@ -1,0 +1,49 @@
+{% extends 'Faculty/base.html' %}
+{% block title %}Add Attendance{% endblock title %}
+{% block body %}
+<div class="container">
+  <div class="card-body">
+
+    <form method="POST" class="row g-3 align-items-center">
+      {% csrf_token %}
+      <h1><label for="">Filter</label></h1>
+
+      <div class="col-lg">
+        <select class="form-select" name="year" id="attendance">
+          <option>Year</option>
+          {% for year in year %}
+          <option >{{year.name}}</option>
+          {% endfor %}
+        </select>
+        <p id="error"></p>
+      </div>
+    </form>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header border-bottom">
+        <h3 class="h4 mb-0">Add Attendance</h3>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <form action="{% url 'save_attendance' %}" role="form" method="post">
+            {% csrf_token %}
+          <table class="table text-sm mb-0 ">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody id="student_list">
+            
+
+            </tbody>
+          </table>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock body %}

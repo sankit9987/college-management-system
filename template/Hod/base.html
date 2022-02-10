@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{% block title %}{% endblock title %}</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Google fonts - Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+  <!-- Choices CSS-->
+  <link rel="stylesheet" href="{% static 'vendor/choices.js/public/assets/styles/choices.min.css' %} ">
+  <!-- Custom Scrollbar-->
+  <link rel="stylesheet" href="{% static 'vendor/overlayscrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- theme stylesheet-->
+  <link rel="stylesheet" href="{% static 'css/style.default.css' %}" id="theme-stylesheet">
+  <!-- Custom stylesheet - for your changes-->
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+  <!-- Favicon-->
+  <link rel="shortcut icon" href="{% static 'img/Msg-sgkm.jpg' %}">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+  
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+  
+  <!-- Tweaks for older IEs-->
+  <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+
+<body>
+  <!-- Side Navbar -->
+  <nav class="side-navbar">
+    <!-- Sidebar Header    -->
+    <div class="sidebar-header d-flex align-items-center justify-content-center p-3 mb-3">
+      <!-- User Info-->
+      <div class="sidenav-header-inner text-center"><img class="img-fluid rounded-circle avatar mb-3"
+          src="{% static 'img/user.png' %}">
+        <h2 class="h5 text-white text-uppercase mb-0">{{request.user.name}}</h2>
+        <p class="text-sm mb-0 text-muted">Admin</p>
+      </div>
+      <a class="brand-small text-center" href="{% url 'Hod_dashboard' %}">
+        <p class="h1 m-0">UC</p>
+      </a>
+    </div>
+    <span class="text-uppercase text-gray-500 text-sm fw-bold letter-spacing-0 mx-lg-2 heading">Main</span>
+    <ul class="list-unstyled">
+      <li class="sidebar-item"><a class="sidebar-link" href="{% url 'Hod_dashboard' %}">
+          <i class="fa fa-th me-xl-2"></i>Dashboard </a></li>
+      <li class="sidebar-item"><a class="sidebar-link" href="{% url 'View_faculty' %}">
+          <i class="fa fa-graduation-cap me-xl-2" aria-hidden="true"></i> Faculty </a></li>
+      <li class="sidebar-item"><a class="sidebar-link" href="{% url 'View_accountant' %}">
+          <i class="fa fa-credit-card me-xl-2"></i>Accountant </a></li>
+      <li class="sidebar-item"><a class="sidebar-link" href="{% url 'View_librarian' %}">
+          <i class="fa fa-book me-xl-2"></i>Libraian </a></li>
+      <li class="sidebar-item"><a class="sidebar-link" href="#Notification" data-bs-toggle="collapse">
+          <i class="fa fa-envelope me-xl-2" aria-hidden="true"></i>Notification</a>
+        <ul class="collapse list-unstyled " id="Notification">
+          <li><a class="sidebar-link" href="#">Notification for All</a></li>
+          <li><a class="sidebar-link" href="#">Notification for Faculty</a></li>
+        </ul>
+      </li>
+  </nav>
+  <div class="page">
+    <!-- navbar-->
+    <header class="header">
+      <nav class="navbar">
+        <div class="container-fluid">
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="d-flex align-items-center"><a
+                class="menu-btn d-flex align-items-center justify-content-center p-2 bg-gray-900" id="toggle-btn"
+                href="#">
+                <svg class="svg-icon svg-icon-sm svg-icon-heavy text-white">
+                  <use xlink:href="#menu-1"> </use>
+                </svg></a><a class="navbar-brand ms-2" href="{% url 'Hod_dashboard' %}">
+                <div class="brand-text d-none d-md-inline-block text-uppercase letter-spacing-0"><span
+                    class="text-white fw-normal text-xs">Universal </span><strong class="text-primary text-sm">
+                    College</strong></div>
+              </a></div>
+            <ul class="nav-menu mb-0 list-unstyled d-flex flex-md-row align-items-md-center">
+              <!-- Notifications dropdown-->
+
+              <!-- Messages dropdown-->
+              <li class="nav-item dropdown"> <a class="nav-link text-white position-relative" id="messages"
+                  rel="nofollow" data-bs-target="#" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">
+                  <svg class="svg-icon svg-icon-xs svg-icon-heavy">
+                    <use xlink:href="#envelope-1"> </use>
+                  </svg><span class="badge bg-info">0</span></a>
+                <ul class="dropdown-menu dropdown-menu-end mt-sm-3 shadow-sm" aria-labelledby="messages">
+                  <li><a class="dropdown-item d-flex py-3" href="#!"> <img
+                        class="img-fluid rounded-circle flex-shrink-0 avatar shadow-0" src="img/avatar-1.jpg" alt="..."
+                        width="45">
+                      <div class="ms-3"><span class="h6 d-block fw-normal mb-1 text-sm text-gray-600">Jason
+                          Doe</span><small class="small text-gray-600"> Sent You Message</small>
+                        <p class="mb-0 small text-gray-600">3 days ago at 7:58 pm - 10.06.2014</p>
+                      </div>
+                    </a></li>
+                  <li><a class="dropdown-item d-flex py-3" href="#!"> <img
+                        class="img-fluid rounded-circle flex-shrink-0 avatar shadow-0" src="img/avatar-2.jpg" alt="..."
+                        width="45">
+                      <div class="ms-3"><span class="h6 d-block fw-normal mb-1 text-sm text-gray-600">Jason
+                          Doe</span><small class="small text-gray-600"> Sent You Message</small>
+                        <p class="mb-0 small text-gray-600">3 days ago at 7:58 pm - 10.06.2014</p>
+                      </div>
+                    </a></li>
+                  <li><a class="dropdown-item d-flex py-3" href="#!"> <img
+                        class="img-fluid rounded-circle flex-shrink-0 avatar shadow-0" src="img/avatar-3.jpg" alt="..."
+                        width="45">
+                      <div class="ms-3"><span class="h6 d-block fw-normal mb-1 text-sm text-gray-600">Jason
+                          Doe</span><small class="small text-gray-600"> Sent You Message</small>
+                        <p class="mb-0 small text-gray-600">3 days ago at 7:58 pm - 10.06.2014</p>
+                      </div>
+                    </a></li>
+                  <li><a class="dropdown-item text-center" href="#!"> <strong class="text-xs text-gray-600">Read all
+                        messages </strong></a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle text-white text-sm" id="languages"
+                  rel="nofollow" data-bs-target="#" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false"><img src="{% static 'img/user.png' %}" height="30px" class="rounded-circle"></a>
+                <ul class="dropdown-menu dropdown-menu-end mt-sm-3 shadow-sm" aria-labelledby="languages">
+                  <li><a class="dropdown-item" rel="nofollow" href="{% url 'edit' %}"> <span><i class="fa fa-user me-xl-2"
+                          aria-hidden="true"></i>Edit User</span></a></li>
+                  <li><a class="dropdown-item" rel="nofollow" href="{% url 'logout' %}"><span><i
+                          class="fa fa-lock me-xl-2"></i>Logout</span></a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    {% block body %}{% endblock body %}
+  </div>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+  <script src="{% static 'vendor/just-validate/js/just-validate.min.js' %}"></script>
+  <script src="{% static 'vendor/choices.js/public/assets/scripts/choices.min.js' %}"></script>
+  <script src="{% static 'vendor/overlayscrollbars/js/OverlayScrollbars.min.js' %}"></script>
+  {% comment %} <script src="{% static 'js/front.js' %}"></script> {% endcomment %}
+  <script src="{% static 'js/custom.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+  <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+  <script>
+    $(document).ready (function(){
+      
+      window.setTimeout(function () { 
+       $("#alert").hide("slow"); 
+      }, 1000);                   
+});
+  $( function() {
+    
+    $( ".datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: '1950:2050',
+    });
+
+  } );
+  $(document).ready(function() {
+    $('.data').DataTable({
+      "bLengthChange": false,
+    });
+} );
+  </script>
+  <script>
+    function injectSvgSprite(path) {
+      var ajax = new XMLHttpRequest();
+      ajax.open("GET", path, true);
+      ajax.send();
+      ajax.onload = function (e) {
+        var div = document.createElement("div");
+        div.className = 'd-none';
+        div.innerHTML = ajax.responseText;
+        document.body.insertBefore(div, document.body.childNodes[0]);
+      }
+    }
+    injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg');
+  </script>
+  
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+</body>
+
+</html>

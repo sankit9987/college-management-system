@@ -1,0 +1,44 @@
+{% extends 'Librarian/base.html' %}
+{% block title %}Assign Book{% endblock title %}
+{% block body %}
+<div class="bg-gray-200 text-sm">
+	<div class="container-fluid">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb mb-0 py-3">
+				<li class="breadcrumb-item"><a class="fw-light" href="{% url 'librarian_Dashboard' %}">Home</a></li>
+				<li class="breadcrumb-item " aria-current="page"><a class="fw-light"
+						href="{% url 'Book' %}">View Book</a>
+				</li>
+				<li class="breadcrumb-item active fw-light" aria-current="page"><b>Add Book</b>
+				</li>
+			</ol>
+		</nav>
+	</div>
+</div>
+<div class="container">
+	<div class="card">
+		<h2 class="card-title mx-5 mt-3 text-success">Add Book</h2>
+		<div class="card-body">
+      <form action="" method="POST">
+        {% csrf_token %}
+			<div class="mb-3">
+				<label class="col-sm-3 form-label" for="Book">Book Name</label>
+				<input class="form-control " placeholder="Enter book Name" autocomplete="off" name="Book" id="Book" type="text" aria-describedby="dobHelp">
+			</div>
+			<div class="mb-3">
+				<label class="col-sm-3 form-label" for="publication">Publication Name</label>
+				<input class="form-control " placeholder="Enter publication Name" autocomplete="off" name="publication" id="publication" type="text" aria-describedby="dobHelp">
+			</div>
+			<div class="mb-3">
+				<label class="col-sm-3 form-label" for="quantity">Quantity</label>
+				<input class="form-control" placeholder="Enter quantity" autocomplete="off" name="quantity" id="quantity" type="number" aria-describedby="dobHelp">
+			</div>
+			<div class="mb-3">
+				<button class="btn btn-primary float-right" type="submit">Add</button>
+			</div>
+      </form
+		</div>
+	</div>
+</div>
+
+{% endblock body %}

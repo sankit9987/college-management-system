@@ -1,0 +1,30 @@
+{% extends 'Librarian/base.html' %}
+{% block title %}Dashboard{% endblock title %}
+{% block body %}
+{% load static %}
+<div class="container">
+	<div class="card">
+		<h2 class="card-title mx-5 mt-3 text-success">Send Notification</h2>
+		<div class="card-body">
+			<form action="" method="POST" >
+				{% csrf_token %}
+				<div class="mb-3">
+					<label class="col-sm-3 form-label" for="gender">Whom</label>
+					<select class="form-select mb-3" required  id="whom" name="whom">
+						<option>All</option>
+						<option>Faculty</option>
+						<option>Student</option>
+						<option>Accountant</option>
+					</select>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="salary">Message</label>
+					<input class="form-control" required  placeholder="Enter Message" name="message" id="message" aria-describedby="emailHelp">
+				</div>
+				<div class="mb-3">
+					<button class="btn btn-primary float-right" type="submit">Send</button>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock body %}

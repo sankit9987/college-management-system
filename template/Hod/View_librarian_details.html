@@ -1,0 +1,67 @@
+{% extends 'Hod/base.html' %}
+{% block title %}{% for librarian in librarian %}{{librarian.name}}{% endfor %}{% endblock title %}
+{% block body %}
+<div class="bg-gray-200 text-sm">
+	<div class="container-fluid">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb mb-0 py-3">
+				<li class="breadcrumb-item"><a class="fw-light" href="{% url 'Hod_dashboard' %}">Home</a></li>
+				<li class="breadcrumb-item " aria-current="page"><a class="fw-light" href="{% url 'View_librarian' %}">View librarian</a></li>
+				<li class="breadcrumb-item active fw-light" aria-current="page"><b>{% for librarian in librarian %}{{librarian.name}}{% endfor %}</b></li>
+			</ol>
+		</nav>
+	</div>
+</div>
+<div class="container">
+	<div class="card">
+		<h2 class="card-title mx-5 mt-3 text-success">Update librarian</h2>
+		<div class="card-body">
+			<form action="" method="POST" enctype= multipart/form-data>
+				{% csrf_token %}
+                {% for librarian in librarian %}
+				<div class="mb-3">
+					<label class="form-label" for="Name">Name</label>
+					<input class="form-control" value="{{librarian.name}}" placeholder="Enter Full Name" name="Name" id="Name" type="text" aria-describedby="namehelp">
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="address">Address</label>
+					<input class="form-control" value="{{librarian.Address}}" placeholder="Enter Address" name="address" id="address" type="text" aria-describedby="addressHelp">
+				</div>
+				<div class="mb-3">
+					<label class="col-sm-3 form-label" for="gender">Gender</label>
+					<select class="form-select mb-3" name="gender" id="gender" name="gender">
+						<option>{{librarian.Gender}}</option>
+						<option>Male</option>
+						<option>Female</option>
+						<option>Other</option>
+					</select>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="bod">Date of Birth</label>
+					<input class="form-control datepicker" value="{{librarian.date_of_birth|date:"Y-m-d"}}" placeholder="Enter Birth of Date" autocomplete="off" name="dob" id="dob" type="text" aria-describedby="dobHelp">
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="mobile">Mobile Number</label>
+					<input class="form-control" value="{{librarian.mobile_no}}" maxlength="10" placeholder="Enter Mobile Number" name="mobile" id="mobile" type="number" maxlength=10 aria-describedby="phoneHelp">
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="email">Email address</label>
+					<input class="form-control" readonly value="{{librarian.email}}" placeholder="Enter Email Address" name="email" id="email" type="email" aria-describedby="emailHelp">
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="qualification">Qualification</label>
+					<input class="form-control" value="{{librarian.Qualification}}" placeholder="Enter Qualification" name="qualification" id="qualification" type="text" aria-describedby="qualificationHelp">
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="exampleInputEmail1">Salary</label>
+					<input class="form-control" value="{{librarian.Salary}}" placeholder="Enter Salary" name="salary" id="exampleInputEmail1" type="number" aria-describedby="emailHelp">
+				</div>
+				<div class="mb-3">
+					<button class="btn btn-primary float-right" type="submit">Update</button>
+				</div>
+                {% endfor %}
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock body %}

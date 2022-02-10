@@ -1,0 +1,91 @@
+{% extends 'Accountant/base.html' %}
+{% block title %}Add Student{% endblock title %}
+{% block body %}
+<div class="bg-gray-200 text-sm">
+	<div class="container-fluid">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb mb-0 py-3">
+				<li class="breadcrumb-item"><a class="fw-light" href="{% url 'Hod_dashboard' %}">Home</a></li>
+				<li class="breadcrumb-item " aria-current="page"><a class="fw-light"
+						href="{% url 'view_student' %}">View Student</a>
+				</li>
+				<li class="breadcrumb-item active fw-light" aria-current="page"><b>Add Student</b>
+				</li>
+			</ol>
+		</nav>
+	</div>
+</div>
+<div class="container">
+	<div class="card">
+		<h2 class="card-title mx-5 mt-3 text-success">Add Student</h2>
+		<div class="card-body">
+			<form action="" method="POST" onsubmit="return pcheck2()" enctype= multipart/form-data>
+				{% csrf_token %}
+			<div class="mb-3">
+				<label class="form-label" for="Name">Name</label>
+				<input class="form-control" placeholder="Enter Full Name" required name="Name" id="Name" type="text" aria-describedby="namehelp">
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="address">Address</label>
+				<input class="form-control" placeholder="Enter Address"required name="address" id="address" type="text" aria-describedby="addressHelp">
+			</div>
+			<div class="mb-3">
+				<label class="col-sm-3 form-label" for="gender">Gender</label>
+				<select class="form-select mb-3" name="gender" id="gender" name="gender">
+					<option>Select Gender</option>
+					<option>Male</option>
+					<option>Female</option>
+					<option>Other</option>
+				</select>
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="bod">Date of Birth</label>
+				<input class="form-control datepicker" placeholder="Enter Birth of Date" required autocomplete="off" name="dob" id="dob" type="text" aria-describedby="dobHelp">
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="mobile">Mobile Number</label>
+				<input class="form-control" maxlength="10" placeholder="Enter Mobile Number" required name="mobile" id="mobile" type="number" maxlength=10 aria-describedby="phoneHelp">
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="email">Email address</label>
+				<input class="form-control" placeholder="Enter Email Address" name="email"required id="email" type="email" aria-describedby="emailHelp">
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="department">Department</label>
+				<select class="form-select mb-3" required name="department" id="department" name="department">
+					<option>Select Department</option>
+					{% for department in department %}
+						<option>{{department.Department_name}}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="mb-3">
+				<label class="col-sm-3 form-label" for="year">Year</label>
+				<select class="form-select mb-3" required  id="year" name="year">
+					<option>Select Year</option>
+					<option>First Year</option>
+					<option>Second Year</option>
+					<option>Third Year</option>
+				</select>
+			</div>			
+			<div class="mb-3">
+				<label class="form-label" for="password">Password</label>
+				<input class="form-control" placeholder="Enter Email Address" required onkeyup="pcheck()" name="password" id="password" type="password" aria-describedby="passwordHelp">
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="cpassword">Confirm Password</label>
+				<input class="form-control" placeholder="Enter Password again" onkeyup="pcheck()" required name="cpassword" id="cpassword" type="password" aria-describedby="cpasswordHelp">
+				<p class="form-label text-danger my-3" id="error" for="cpassword"></p>
+			</div>
+			<div class="mb-3">
+				<label class="col-sm-3 form-label" for="profile">Profile Photo</label>
+				<input class="form-control" name="profile" required id="profile" type="file">
+			</div>
+			<div class="mb-3">
+				<button class="btn btn-primary float-right" type="submit">Add</button>
+			</div>
+		</form>
+		</div>
+	</div>
+</div>
+{% endblock body %}

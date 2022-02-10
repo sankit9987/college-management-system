@@ -1,0 +1,68 @@
+{% extends 'Hod/base.html' %}
+{% block title %}Dashboard{% endblock title %}
+{% block body %}
+{% load static %}
+<section class="py-4">
+    {% if messages %}
+        <div id="alert" class="alert alert-success text-center" role="alert">
+            {% for msg in messages %} 
+                <h6 class="alert-heading">{{msg}}</h6>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="container-fluid">
+        <div class="row align-items-stretch gy-4">
+            <div class="col-lg-4">
+                <div class="card text-center h-100 mb-0">
+                    <div class="card-body">
+                        <div class="sidenav-header-inner text-center">
+                            <img class=" avatar mb-3" src="{% static 'img/Faculty.png' %} ">
+                        </div>
+                        <p class="text-gray-700 display-6">{{faculty}}</p>
+                        <p class="text-primary h2 fw-bold">Total Faculty</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card text-center h-100 mb-0">
+                    <div class="card-body">
+                        <div class="sidenav-header-inner text-center">
+                            <img class=" avatar mb-3" src="{% static 'img/Library.png' %} ">
+                        </div>
+                        <p class="text-gray-700 display-6">{{librarian}}</p>
+                        <p class="text-primary h2 fw-bold">Total Librarian</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card text-center h-100 mb-0">
+                    <div class="card-body">
+                        <div class="sidenav-header-inner text-center">
+                            <img class=" avatar mb-3" src="{% static 'img/Account.jpg' %} ">
+                        </div>
+                        <p class="text-gray-700 display-6">{{accountant}}</p>
+                        <p class="text-primary h2 fw-bold">Total Accountant</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container-fluid">
+        <div class="row align-items-stretch gy-4">
+            <div class="col-lg-4">
+                <div class="card text-center h-100 mb-0">
+                    <div class="card-body">
+                        <div class="sidenav-header-inner text-center">
+                            <img class=" avatar mb-3" src="{% static 'img/Student.jpg' %} ">
+                        </div>
+                        <p class="text-gray-700 display-6">{{student}}</p>
+                        <p class="text-primary h2 fw-bold">Total Student</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}
