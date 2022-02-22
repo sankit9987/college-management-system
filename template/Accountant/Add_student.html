@@ -1,91 +1,277 @@
-{% extends 'Accountant/base.html' %}
-{% block title %}Add Student{% endblock title %}
+{% extends 'Hod/base.html' %}
+{% block title %}Add student{% endblock title %}
 {% block body %}
-<div class="bg-gray-200 text-sm">
-	<div class="container-fluid">
-		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb mb-0 py-3">
-				<li class="breadcrumb-item"><a class="fw-light" href="{% url 'Hod_dashboard' %}">Home</a></li>
-				<li class="breadcrumb-item " aria-current="page"><a class="fw-light"
-						href="{% url 'view_student' %}">View Student</a>
-				</li>
-				<li class="breadcrumb-item active fw-light" aria-current="page"><b>Add Student</b>
-				</li>
-			</ol>
-		</nav>
+
+<div class="content-area">
+	{% if messages %}
+	<div id="alert" class="alert alert-danger text-center" role="alert">
+		{% for msg in messages %}
+		<h6 class="alert-heading">{{msg}}</h6>
+		{% endfor %}
 	</div>
-</div>
-<div class="container">
-	<div class="card">
-		<h2 class="card-title mx-5 mt-3 text-success">Add Student</h2>
-		<div class="card-body">
-			<form action="" method="POST" onsubmit="return pcheck2()" enctype= multipart/form-data>
-				{% csrf_token %}
-			<div class="mb-3">
-				<label class="form-label" for="Name">Name</label>
-				<input class="form-control" placeholder="Enter Full Name" required name="Name" id="Name" type="text" aria-describedby="namehelp">
+	{% endif %}
+	<style>
+		#ui-datepicker-div {
+			background-color: #adadad;
+		}
+	</style>
+	<div class="mr-breadcrumb">
+		<div class="row">
+			<div class="col-lg-12">
+				<h4 class="heading d-flex justify-content-between">
+					<span>Add student </span>
+					<a class="add-btn" href="{% url 'view_student' %}">
+						<i class="fa fa-arrow-left" aria-hidden="true"></i>
+						Back
+					</a>
+				</h4>
+				<ul class="links">
+					<li>
+						<a href="{% url 'index' %}">Dashbord</a>
+					</li>
+					<li>
+						<i class="fa fa-chevron-right" aria-hidden="true"></i>
+					</li>
+					<li>
+						<a href="{% url 'view_student' %}">View student </a>
+					</li>
+					<li>
+						<i class="fa fa-chevron-right" aria-hidden="true"></i>
+					</li>
+					<li>
+						<a href="{% url 'add_student' %}">Add student</a>
+					</li>
+
+				</ul>
 			</div>
-			<div class="mb-3">
-				<label class="form-label" for="address">Address</label>
-				<input class="form-control" placeholder="Enter Address"required name="address" id="address" type="text" aria-describedby="addressHelp">
-			</div>
-			<div class="mb-3">
-				<label class="col-sm-3 form-label" for="gender">Gender</label>
-				<select class="form-select mb-3" name="gender" id="gender" name="gender">
-					<option>Select Gender</option>
-					<option>Male</option>
-					<option>Female</option>
-					<option>Other</option>
-				</select>
-			</div>
-			<div class="mb-3">
-				<label class="form-label" for="bod">Date of Birth</label>
-				<input class="form-control datepicker" placeholder="Enter Birth of Date" required autocomplete="off" name="dob" id="dob" type="text" aria-describedby="dobHelp">
-			</div>
-			<div class="mb-3">
-				<label class="form-label" for="mobile">Mobile Number</label>
-				<input class="form-control" maxlength="10" placeholder="Enter Mobile Number" required name="mobile" id="mobile" type="number" maxlength=10 aria-describedby="phoneHelp">
-			</div>
-			<div class="mb-3">
-				<label class="form-label" for="email">Email address</label>
-				<input class="form-control" placeholder="Enter Email Address" name="email"required id="email" type="email" aria-describedby="emailHelp">
-			</div>
-			<div class="mb-3">
-				<label class="form-label" for="department">Department</label>
-				<select class="form-select mb-3" required name="department" id="department" name="department">
-					<option>Select Department</option>
-					{% for department in department %}
-						<option>{{department.Department_name}}</option>
-					{% endfor %}
-				</select>
-			</div>
-			<div class="mb-3">
-				<label class="col-sm-3 form-label" for="year">Year</label>
-				<select class="form-select mb-3" required  id="year" name="year">
-					<option>Select Year</option>
-					<option>First Year</option>
-					<option>Second Year</option>
-					<option>Third Year</option>
-				</select>
-			</div>			
-			<div class="mb-3">
-				<label class="form-label" for="password">Password</label>
-				<input class="form-control" placeholder="Enter Email Address" required onkeyup="pcheck()" name="password" id="password" type="password" aria-describedby="passwordHelp">
-			</div>
-			<div class="mb-3">
-				<label class="form-label" for="cpassword">Confirm Password</label>
-				<input class="form-control" placeholder="Enter Password again" onkeyup="pcheck()" required name="cpassword" id="cpassword" type="password" aria-describedby="cpasswordHelp">
-				<p class="form-label text-danger my-3" id="error" for="cpassword"></p>
-			</div>
-			<div class="mb-3">
-				<label class="col-sm-3 form-label" for="profile">Profile Photo</label>
-				<input class="form-control" name="profile" required id="profile" type="file">
-			</div>
-			<div class="mb-3">
-				<button class="btn btn-primary float-right" type="submit">Add</button>
-			</div>
-		</form>
 		</div>
 	</div>
+	<form action="" method="POST" onsubmit="return pcheck2()" enctype=multipart/form-data>
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="add-product-content">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="product-description">
+								<div class="body-area">
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Name* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input type="text" class="input-field" placeholder="Enter Full Name"
+												name="Name" required="">
+										</div>
+									</div>
+
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Address* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input type="text" class="input-field" placeholder="Enter Address "
+												name="address" required="">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Gender*</h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<select id="cat" name="gender" required="">
+												<option value="">Select Gender</option>
+												<option>Male</option>
+												<option>Female</option>
+												<option>Other</option>
+
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Date of Birth* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input class="form-control datepicker" required
+												placeholder="Enter Birth of Date" autocomplete="off" name="dob" id="dob"
+												type="text" aria-describedby="dobHelp">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Mobile Numbe* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input class="form-control " required
+												oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+												placeholder="Enter Mobile Number" maxlength="10" autocomplete="off"
+												name="mobile" id="mobile" type="number" aria-describedby="dobHelp">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Email address* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input class="form-control " required placeholder="Enter Email address"
+												autocomplete="off" name="email" id="email" type="text"
+												aria-describedby="dobHelp">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Qualification* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input class="form-control " required placeholder="Enter Qualification"
+												autocomplete="off" name="qualification" id="qualification" type="text"
+												aria-describedby="dobHelp">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Salary* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input class="form-control " required placeholder="Enter Salary"
+												autocomplete="off" name="salary" id="salary" type="number"
+												aria-describedby="dobHelp">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Department* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<select class="form-select mb-3" required name="department" id="department"
+												name="department">
+												<option>Select Department</option>
+												{% for department in department %}
+												<option>{{department.Department_name}}</option>
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Year* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											
+												<select class="form-select mb-3" required  id="year" name="year">
+													<option>Select Year</option>
+													<option>First Year</option>
+													<option>Second Year</option>
+													<option>Third Year</option>
+												</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Password* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input class="form-control" required placeholder="Enter Password"
+												name="password" onkeyup="pcheck()" id="password" type="password"
+												aria-describedby="passwordHelp">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Confirm Password* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input class="form-control" placeholder="Enter Password again" required
+												name="cpassword" onkeyup="pcheck()" id="cpassword" type="password"
+												aria-describedby="cpasswordHelp">
+											<p class="form-label text-danger my-3" id="error" for="cpassword"></p>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-lg-12 text-center">
+											<button class="addProductSubmit-btn" type="submit">Add student</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="add-product-content">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="product-description">
+								<div class="body-area">
+
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Profile Picture *</h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<div class="img-upload custom-image-upload">
+												<div id="image-preview" class="img-preview"
+													style="background: url(https://geniuscart.royalscripts.com/assets/vendor/images/upload.png);">
+													<label for="image-upload" class="img-label" id="image-label"><i
+															class="fa fa-upload" aria-hidden="true"></i>Upload
+														Image</label>
+													<input type="file" name="profile" required class="img-upload-p"
+														id="image-upload">
+												</div>
+												<p class="text">
+													Prefered Size: (800x800) or Square Size.
+												</p>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
 </div>
+
+
+
+
+
+
+
+
 {% endblock body %}

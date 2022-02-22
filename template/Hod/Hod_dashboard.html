@@ -1,68 +1,85 @@
 {% extends 'Hod/base.html' %}
 {% block title %}Dashboard{% endblock title %}
 {% block body %}
-{% load static %}
-<section class="py-4">
-    {% if messages %}
-        <div id="alert" class="alert alert-success text-center" role="alert">
-            {% for msg in messages %} 
-                <h6 class="alert-heading">{{msg}}</h6>
-            {% endfor %}
-        </div>
-    {% endif %}
-    <div class="container-fluid">
-        <div class="row align-items-stretch gy-4">
-            <div class="col-lg-4">
-                <div class="card text-center h-100 mb-0">
-                    <div class="card-body">
-                        <div class="sidenav-header-inner text-center">
-                            <img class=" avatar mb-3" src="{% static 'img/Faculty.png' %} ">
-                        </div>
-                        <p class="text-gray-700 display-6">{{faculty}}</p>
-                        <p class="text-primary h2 fw-bold">Total Faculty</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card text-center h-100 mb-0">
-                    <div class="card-body">
-                        <div class="sidenav-header-inner text-center">
-                            <img class=" avatar mb-3" src="{% static 'img/Library.png' %} ">
-                        </div>
-                        <p class="text-gray-700 display-6">{{librarian}}</p>
-                        <p class="text-primary h2 fw-bold">Total Librarian</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card text-center h-100 mb-0">
-                    <div class="card-body">
-                        <div class="sidenav-header-inner text-center">
-                            <img class=" avatar mb-3" src="{% static 'img/Account.jpg' %} ">
-                        </div>
-                        <p class="text-gray-700 display-6">{{accountant}}</p>
-                        <p class="text-primary h2 fw-bold">Total Accountant</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section>
-    <div class="container-fluid">
-        <div class="row align-items-stretch gy-4">
-            <div class="col-lg-4">
-                <div class="card text-center h-100 mb-0">
-                    <div class="card-body">
-                        <div class="sidenav-header-inner text-center">
-                            <img class=" avatar mb-3" src="{% static 'img/Student.jpg' %} ">
-                        </div>
-                        <p class="text-gray-700 display-6">{{student}}</p>
-                        <p class="text-primary h2 fw-bold">Total Student</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-{% endblock body %}
+				<!-- Main Content Area Start -->
+				<div class="content-area">
+					{% if messages %}
+					<div id="alert" class="alert alert-success text-center" role="alert">
+					  {% for msg in messages %}
+					  <h6 class="alert-heading">{{msg}}</h6>
+					  {% endfor %}
+					</div>
+					{% endif %}
+
+
+					<div class="row row-cards-one">
+
+						<div class="col-md-12 col-lg-6 col-xl-4">
+							<div class="mycard bg1">
+								<div class="left">
+									<h5 class="title">Total Faculty! </h5>
+									<span class="number">{{faculty}}</span>
+									<a href="https://geniuscart.royalscripts.com/vendor/orders" class="link">View
+										All</a>
+								</div>
+								<div class="right d-flex align-self-center">
+									<div class="icon">
+										<i class="fa fa-graduation-cap me-xl-2" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-12 col-lg-6 col-xl-4">
+							<div class="mycard bg2">
+								<div class="left">
+									<h5 class="title">Total Student!</h5>
+									<span class="number">{{student}}</span>
+									<a href="https://geniuscart.royalscripts.com/vendor/orders" class="link">View
+										All</a>
+								</div>
+								<div class="right d-flex align-self-center">
+									<div class="icon">
+										<i class="fa fa-male" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-12 col-lg-6 col-xl-4">
+							<div class="mycard bg3">
+								<div class="left">
+									<h5 class="title">Total Accountant!</h5>
+									<span class="number">{{accountant}}</span>
+									<a href="https://geniuscart.royalscripts.com/vendor/orders" class="link">View
+										All</a>
+								</div>
+								<div class="right d-flex align-self-center">
+									<div class="icon">
+										<i class="fa fa-credit-card me-xl-2"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-12 col-lg-6 col-xl-4">
+							<div class="mycard bg4">
+								<div class="left">
+									<h5 class="title">Total Librarian!</h5>
+									<span class="number">{{librarian}}</span>
+									<a href="https://geniuscart.royalscripts.com/vendor/products" class="link">View
+										All</a>
+								</div>
+								<div class="right d-flex align-self-center">
+									<div class="icon">
+										<i class="fa fa-book me-xl-2"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endblock body %}

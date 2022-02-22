@@ -353,14 +353,7 @@ a.btn-back {
   }
   .img-upload.full-width-img #image-preview label,
   .img-upload.full-width-img #image-preview input
-  {
-  top: 100%;
-  transform: auto;
-  left: 0%;
-  margin-top: 50px;
-  right: 0;
-  margin-left: 0px;
-  }
+  {top: 100%;transform: auto;left: 6%;margin-top: 50px;right: 0;margin-left: 0px;}
   
   
   /* Special-box Box Area Start */
@@ -843,16 +836,5 @@ a.btn-back {
   .price-container input {
   padding-left: 10px;
   }
-  select.vendor-btn {
-    color: #fff;
-    width: auto;
-    height: auto;
-    padding: 5px 10px;
-    border: 0px;
-    border-radius: 50px;
-    cursor: pointer;
-  }
-  select.vendor-btn option {
-    background: #fff;
-    color: black;
-  }
+  
+  

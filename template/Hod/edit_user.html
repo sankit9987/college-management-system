@@ -3,7 +3,7 @@
 {% block body %}
 <div class="container">
 	<div class="card">
-		<h2 class="card-title mx-5 mt-3 text-success">Edit </h2>
+		<h3 class="card-title mx-4 mt-3 text-center text-dark">Edit </h3><hr>
 		<div class="card-body">
 			<form action="" method="POST" onsubmit="return pcheck2()" enctype= multipart/form-data>
 				{% csrf_token %}
@@ -40,13 +40,13 @@
 					<label class="form-label" for="password">New Password</label>
 					<input class="form-control" placeholder="Enter password" name="password" onkeyup="pcheck()" id="password" type="text" aria-describedby="qualificationHelp">
 				</div>
-				<div class="mb-3">
+				<div >
 					<label class="form-label" for="exampleInputEmail1">Confirm Password</label>
 					<input class="form-control"  placeholder="Enter Password again" name="salary" onkeyup="pcheck()" id="cpassword" aria-describedby="emailHelp">
-					<p class="form-label text-danger my-3" id="error" for="cpassword"></p>
+					<p class="form-label text-danger " id="error" for="cpassword"></p>
 				</div>
-				<div class="mb-3">
-					<button class="btn btn-primary float-right" type="submit">Update</button>
+				<div class=" d-flex justify-content-center">
+					<button class="btn btn-primary " type="submit">Update</button>
 				</div>
 			</form>
 		</div>

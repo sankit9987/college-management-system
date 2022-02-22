@@ -28,23 +28,23 @@ urlpatterns = [
     path('add_fuculty',views.add_faculty,name="add_faculty"),
     path('View_faculty',views.View_faclty,name="View_faculty"),
     path('Delete_faculty/<int:id>',views.Delete_faclty,name="Delete_faclty"),
-    path('Faculty/<int:id>',views.faculty,name="Faculty"),
+    path('Faculty/<str:email>',views.faculty,name="Faculty"),
 
     path('Add_accountant',views.add_accountant,name="add_accountant"),
     path('View_accountant',views.View_accountant,name="View_accountant"),
     path('Delete_accountant/<int:id>',views.Delete_accountant,name="Delete_accountant"),
-    path('Accountant/<int:id>',views.accountant,name="accountant"),
+    path('Accountant/<str:email>',views.accountant,name="accountant"),
 
     path('Add_librarian',views.add_librarian,name="add_librarian"),
     path('View_librarian',views.View_librarian,name="View_librarian"),
     path('Delete_librarian/<int:id>',views.Delete_librarian,name="Delete_librarian"),
-    path('Librarian/<int:id>',views.librarian,name="librarian"),
+    path('Librarian/<str:email>',views.librarian,name="librarian"),
 
     path('Accountant_Dashboard',views.accountant_Dashboard,name="accountant_Dashboard"),
     path('Add_student',views.add_student,name="add_student"),
     path('View_student',views.view_student,name="view_student"),
     path('Delete_student/<int:id>',views.Delete_student,name="Delete_student"),
-    path('student/<int:id>',views.student,name="student"),
+    path('student/<str:email>',views.student,name="student"),
     path("edit",views.edit_accountant,name="edit_accountant"),
 
     path('Librarian_Dashboard',views.librarian_Dashboard,name="librarian_Dashboard"),

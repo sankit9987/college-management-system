@@ -1,12 +1,14 @@
 from django.shortcuts import render,redirect
 from django.shortcuts import HttpResponse
-from .models import Faculty,Department,Subject,Accountant,Librarian,CustomeUser,Notification,Student,Add_Book,Assign_book,Year,Marks,Attendance
+from .models import Faculty,Department,Subject,Accountant,Librarian,CustomeUser,Notification,Student,Add_Book,Assign_book,Year,Marks,Attendance,CustomeUser
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http.response  import JsonResponse
 from django.http import HttpResponse
+import os
+from datetime import date
 
 # Login 
 def index(request):
@@ -42,6 +44,8 @@ def index(request):
             return redirect("librarian_Dashboard")
         else:
             return redirect("Student_Dashboard")
+
+
 
 #Edit User
 @login_required(login_url='index')
@@ -136,11 +140,17 @@ def add_faculty(request):
             department = request.POST['department']
             depart = Department.objects.get(Department_name=department)
             sub  = Subject.objects.get(subject_name=subject)
-            Faculty.objects.create_faculty(email=email, password=password, name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob, profile=profile, Qualification=qualification, department=depart, Salary=salary, subject=sub)
+            user = CustomeUser.objects.filter(email=email)
+            if user:
+                messages.error(request,"User Already exits!!!") 
+                return redirect("add_faculty")
+            else:
+                Faculty.objects.create_faculty(email=email, password=password, name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob, profile=profile, Qualification=qualification, department=depart, Salary=salary, subject=sub)
             messages.success(request,"Add successfully!!!") 
             return redirect("View_faculty")
         department = Department.objects.all()
         subject = Subject.objects.all()
+        
         return render(request,"Hod/Add_faculty.html",{"department":department,"subject":subject})
     else:
         if request.user.is_faculty:
@@ -188,7 +198,7 @@ def Delete_faclty(request,id):
 
 # View Single Faculty
 @login_required(login_url='index')
-def faculty(request,id):
+def faculty(request,email):
     if request.user.is_superuser:
         if request.method=="POST":
             name = request.POST['Name']
@@ -198,10 +208,16 @@ def faculty(request,id):
             mobile = request.POST['mobile']
             qualification = request.POST['qualification']
             salary = request.POST['salary']
-            Faculty.objects.filter(id=id).update(name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob,  Qualification=qualification, Salary=salary)
+            Faculty.objects.filter(email=email).update(name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob,  Qualification=qualification, Salary=salary)
+            if request.FILES:
+                profile = request.FILES['profile']
+                faclty = Faculty.objects.get(email = email)
+                os.remove(faclty.profile.path)
+                faclty.profile = profile
+                faclty.save()
             messages.success(request,"Update successfully!!!") 
             return redirect("View_faculty")
-        filter = Faculty.objects.filter(id=id)
+        filter = Faculty.objects.filter(email=email)
         return render(request, "Hod/View_faculty_details.html",{"faculty":filter})
     else:
         if request.user.is_faculty:
@@ -273,7 +289,7 @@ def Delete_accountant(request,id):
             return redirect("Student_Dashboard")
 # Update Accountant Details
 @login_required(login_url='index')
-def accountant(request,id):
+def accountant(request,email):
     if request.user.is_superuser:
         if request.method=="POST":
             name = request.POST['Name']
@@ -283,10 +299,16 @@ def accountant(request,id):
             mobile = request.POST['mobile']
             qualification = request.POST['qualification']
             salary = request.POST['salary']
-            Accountant.objects.filter(id=id).update(name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob,  Qualification=qualification, Salary=salary)
+            Accountant.objects.filter(email=email).update(name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob,  Qualification=qualification, Salary=salary)
+            if request.FILES:
+                profile = request.FILES['profile']
+                faclty = Accountant.objects.get(email = email)
+                os.remove(faclty.profile.path)
+                faclty.profile = profile
+                faclty.save()
             messages.success(request,"Update successfully!!!") 
             return redirect("View_accountant")
-        filter = Accountant.objects.filter(id=id)
+        filter = Accountant.objects.filter(email=email)
         return render(request, "Hod/View_accountant_details.html",{"accountant":filter,})
     else:
         if request.user.is_faculty:
@@ -360,7 +382,7 @@ def Delete_librarian(request,id):
             return redirect("Student_Dashboard")
 # Update Librarian Details
 @login_required(login_url='index')
-def librarian(request,id):
+def librarian(request,email):
     if request.user.is_superuser:
         if request.method=="POST":
             name = request.POST['Name']
@@ -370,10 +392,16 @@ def librarian(request,id):
             mobile = request.POST['mobile']
             qualification = request.POST['qualification']
             salary = request.POST['salary']
-            Librarian.objects.filter(id=id).update(name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob,  Qualification=qualification, Salary=salary)
+            Librarian.objects.filter(email=email).update(name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob,  Qualification=qualification, Salary=salary)
             messages.success(request,"Update successfully!!!") 
+            if request.FILES:
+                profile = request.FILES['profile']
+                faclty = Librarian.objects.get(email = email)
+                os.remove(faclty.profile.path)
+                faclty.profile = profile
+                faclty.save()
             return redirect("View_librarian")
-        filter = Librarian.objects.filter(id=id)
+        filter = Librarian.objects.filter(email=email)
         return render(request, "Hod/View_librarian_details.html",{"librarian":filter,})
     else:
         if request.user.is_faculty:
@@ -459,7 +487,7 @@ def Delete_student(request,id):
         else:
             return redirect("Student_Dashboard")
 @login_required(login_url='index')
-def student(request,id):
+def student(request,email):
     if request.user.is_accountant:
         if request.method=="POST":
             name = request.POST['Name']
@@ -469,12 +497,19 @@ def student(request,id):
             mobile = request.POST['mobile']
             year = request.POST['year']
             YEAR = Year.objects.get(name=year)
-            Student.objects.filter(id=id).update(name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob,year=YEAR)
+            Student.objects.filter(email=email).update(name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob,year=YEAR)
+            if request.FILES:
+                profile = request.FILES['profile']
+                faclty = Student.objects.get(email = email)
+                os.remove(faclty.profile.path)
+                faclty.profile = profile
+                faclty.save()
             messages.success(request,"Update successfully!!!") 
             return redirect("view_student")
-        student = Student.objects.get(id=id)
+        studen = Student.objects.filter(email=email)
+        print(studen)
         year = Year.objects.all()
-        return render(request, "Accountant/view_studen_details.html",{"student":student,"year":year})
+        return render(request, "Accountant/view_studen_details.html",{"student":studen,"year":year})
     else:
         if request.user.is_faculty:
             return redirect("Faculty_Dashboard")

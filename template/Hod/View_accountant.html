@@ -1,62 +1,93 @@
 {% extends 'Hod/base.html' %}
 {% block title %}View Accountant{% endblock title %}
 {% block body %}
-<div class="bg-gray-200 text-sm">
-  <div class="container-fluid">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb mb-0 py-3">
-        <li class="breadcrumb-item"><a class="fw-light" href="{% url 'Hod_dashboard' %}">Home</a></li>
-        <li class="breadcrumb-item active fw-light" aria-current="page">View Accountant </li>
-      </ol>
-    </nav>
-  </div>
-</div>
-{% if messages %}
+
+<div class="content-area">
+  {% if messages %}
 <div id="alert" class="alert alert-success text-center" role="alert">
   {% for msg in messages %}
   <h6 class="alert-heading">{{msg}}</h6>
   {% endfor %}
 </div>
 {% endif %}
-<div class="card-body">
-  <a href="{% url 'add_accountant' %}" class="btn btn-primary " type="button" style="border-radius: 20px">
-    <i class="fa fa-plus-circle" aria-hidden="true"></i> Add
-  </a>
-</div>
-<div class="container-fluid">
-  <div class="card">
-    <div class="card-header border-bottom">
-      <h3 class="h4 mb-0">All Accountant</h3>
-    </div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table text-sm mb-0 data">
-          <thead>
-            <tr>
-              <th>Sr No.</th>
-              <th>Name</th>
-              <th>Gender</th>
-              <th>Mobile Number</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
+  <div class="mr-breadcrumb">
+    <div class="row">
+      <div class="col-lg-12">
+        <h4 class="heading">All Accountant</h4>
+        <ul class="links">
+          <li>
+            <a href="{% url 'index' %}">Dashbord</a>
+          </li>
+          <li>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+          </li>
+         
+          <li>
+            <a href="{% url 'View_accountant' %}">Accountant</a>
+          </li>
 
-            {% for accountant in accountant %}
-            <tr>
-              <th scope="row">{{forloop.counter}}</th>
-              <td>{{accountant.name}}</td>
-              <td>{{accountant.Gender}}</td>
-              <td>{{accountant.mobile_no}}</td>
-              <td><a href="{% url 'accountant' accountant.id%}" style="color:black;" title="Update Accountant"> <i
-                    class="fa fa-eye" aria-hidden="true"></i>&nbsp&nbsp&nbsp<a
-                    href="{% url 'Delete_accountant' accountant.id %}" style="color:black;" title="Delete Accountant"><i
-                      class="fa fa-trash" aria-hidden="true" onclick="return confirm('Are you sure you want to remove')"></a></i></td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+        </ul>
       </div>
     </div>
   </div>
-  {% endblock body %}
+  <div class="product-area">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="mr-table allproduct dataTables_wrapper">
+
+
+          <div class="table-responsiv dataTables_wrapper">
+            {% comment %} <div class="gocover"
+              style="background: url(https://geniuscart.royalscripts.com/assets/images/1564224329loading3.gif) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+            </div> {% endcomment %}
+            <div id="geniustable_wrapper " class="dataTables_wrapper dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-sm-12 ">
+                  <table id="geniustable55" class="table table-hover dt-responsive dataTable no-footer dtr-inline"
+                    cellspacing="0" width="100%"  a style="width: 100%;">
+                    <div class="col-sm-4 table-contents"  style="position: absolute; top: 4%; right: 0px; z-index:99999999;"><a class="add-btn" href="{% url 'add_accountant' %}"><i class="fa fa-plus" aria-hidden="true"></i>
+                      <span class="remove-mobile">Add <span></span></span></a></div>
+                    <thead>
+                      <tr role="row">
+                        <th class="sorting_disabled"  style="width: 167px;">Sr No.</th>
+                        <th class="sorting_disabled"  style="width: 112px;">Name</th>
+                        <th class="sorting_disabled"  style="width: 120px;">Gender</th>
+                        <th class="sorting_disabled"  style="width: 194px;">Mobile Number</th>
+                        <th class="sorting_disabled"  style="width: 93px;">Actions</th>
+                      </tr>
+                    </thead>
+                    {% for accountant in accountant %}
+
+                    <tr>
+                      <th scope="row">{{forloop.counter}}</th>
+                      <td>{{accountant.name}}</td>
+                      <td>{{accountant.Gender}}</td>
+                      <td>{{accountant.mobile_no}}</td>
+                      <td>
+                          <a href="{% url 'accountant' accountant.email %}" aria-hidden="true" style="color:black;"
+                          title="Update accountant">
+                            <i class="fa fa-eye"></i>
+                          </a>&nbsp&nbsp&nbsp
+                          <a href="{% url 'Delete_accountant' accountant.id %}" style="color:black;" title="Delete accountant"><i
+                            class="fa fa-trash" aria-hidden="true" onclick="return confirm('Are you sure you want to remove')"></a></i></td>
+                    </tr>
+                    {% endfor %}
+
+                    <tbody>
+                     
+                    </tbody>
+
+                  </table>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock body %}

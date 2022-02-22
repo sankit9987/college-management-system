@@ -1,67 +1,214 @@
 {% extends 'Hod/base.html' %}
-{% block title %}{% for accountant in accountant %}{{accountant.name}}{% endfor %}{% endblock title %}
+{% block title %}Add accountant{% endblock title %}
 {% block body %}
-<div class="bg-gray-200 text-sm">
-	<div class="container-fluid">
-		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb mb-0 py-3">
-				<li class="breadcrumb-item"><a class="fw-light" href="{% url 'Hod_dashboard' %}">Home</a></li>
-				<li class="breadcrumb-item " aria-current="page"><a class="fw-light" href="{% url 'View_accountant' %}">View accountant</a></li>
-				<li class="breadcrumb-item active fw-light" aria-current="page"><b>{% for accountant in accountant %}{{accountant.name}}{% endfor %}</b></li>
-			</ol>
-		</nav>
+{% for accountant in accountant %}
+<div class="content-area">
+	{% if messages %}
+	<div id="alert" class="alert alert-danger text-center" role="alert">
+		{% for msg in messages %}
+		<h6 class="alert-heading">{{msg}}</h6>
+		{% endfor %}
 	</div>
-</div>
-<div class="container">
-	<div class="card">
-		<h2 class="card-title mx-5 mt-3 text-success">Update accountant</h2>
-		<div class="card-body">
-			<form action="" method="POST" enctype= multipart/form-data>
-				{% csrf_token %}
-                {% for accountant in accountant %}
-				<div class="mb-3">
-					<label class="form-label" for="Name">Name</label>
-					<input class="form-control" value="{{accountant.name}}" placeholder="Enter Full Name" name="Name" id="Name" type="text" aria-describedby="namehelp">
-				</div>
-				<div class="mb-3">
-					<label class="form-label" for="address">Address</label>
-					<input class="form-control" value="{{accountant.Address}}" placeholder="Enter Address" name="address" id="address" type="text" aria-describedby="addressHelp">
-				</div>
-				<div class="mb-3">
-					<label class="col-sm-3 form-label" for="gender">Gender</label>
-					<select class="form-select mb-3" name="gender" id="gender" name="gender">
-						<option>{{accountant.Gender}}</option>
-						<option>Male</option>
-						<option>Female</option>
-						<option>Other</option>
-					</select>
-				</div>
-				<div class="mb-3">
-					<label class="form-label" for="bod">Date of Birth</label>
-					<input class="form-control datepicker" value="{{accountant.date_of_birth|date:"Y-m-d"}}" placeholder="Enter Birth of Date" autocomplete="off" name="dob" id="dob" type="text" aria-describedby="dobHelp">
-				</div>
-				<div class="mb-3">
-					<label class="form-label" for="mobile">Mobile Number</label>
-					<input class="form-control" value="{{accountant.mobile_no}}" maxlength="10" placeholder="Enter Mobile Number" name="mobile" id="mobile" type="number" maxlength=10 aria-describedby="phoneHelp">
-				</div>
-				<div class="mb-3">
-					<label class="form-label" for="email">Email address</label>
-					<input class="form-control" readonly value="{{accountant.email}}" placeholder="Enter Email Address" name="email" id="email" type="email" aria-describedby="emailHelp">
-				</div>
-				<div class="mb-3">
-					<label class="form-label" for="qualification">Qualification</label>
-					<input class="form-control" value="{{accountant.Qualification}}" placeholder="Enter Qualification" name="qualification" id="qualification" type="text" aria-describedby="qualificationHelp">
-				</div>
-				<div class="mb-3">
-					<label class="form-label" for="exampleInputEmail1">Salary</label>
-					<input class="form-control" value="{{accountant.Salary}}" placeholder="Enter Salary" name="salary" id="exampleInputEmail1" type="number" aria-describedby="emailHelp">
-				</div>
-				<div class="mb-3">
-					<button class="btn btn-primary float-right" type="submit">Update</button>
-				</div>
-                {% endfor %}
-			</form>
+	{% endif %}
+	<style>
+		#ui-datepicker-div {
+			background-color: #adadad;
+		}
+	</style>
+	<div class="mr-breadcrumb">
+		<div class="row">
+			<div class="col-lg-12">
+				<h4 class="heading d-flex justify-content-between">
+					<span>Add accountant </span>
+					<a class="add-btn" href="{% url 'View_accountant' %}">
+						<i class="fa fa-arrow-left" aria-hidden="true"></i>
+						Back
+					</a>
+				</h4>
+				<ul class="links">
+					<li>
+						<a href="{% url 'index' %}">Dashbord</a>
+					</li>
+					<li>
+						<i class="fa fa-chevron-right" aria-hidden="true"></i>
+					</li>
+					<li>
+						<a href="{% url 'View_accountant' %}">View accountant </a>
+					</li>
+					<li>
+						<i class="fa fa-chevron-right" aria-hidden="true"></i>
+					</li>
+					<li>
+						<a href="#">{{accountant.name}}</a>
+					</li>
+
+				</ul>
+			</div>
 		</div>
 	</div>
+	<form action="" method="POST" onsubmit="return pcheck2()" enctype=multipart/form-data>
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="add-product-content">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="product-description">
+								<div class="body-area">
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Name* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input type="text" class="input-field" placeholder="Enter Full Name" value="{{accountant.name}}"
+												name="Name" required="">
+										</div>
+									</div>
+
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Address* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input type="text" value="{{accountant.Address}}" class="input-field" placeholder="Enter Address "
+												name="address" required="">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Gender*</h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<select id="cat" name="gender">
+												<option value="{{accountant.Gender}}">{{accountant.Gender}}</option>
+												<option>Male</option>
+												<option>Female</option>
+												<option>Other</option>
+
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Date of Birth* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input class="form-control datepicker" required
+												placeholder="Enter Birth of Date" value="{{accountant.date_of_birth|date:"Y-m-d"}}" autocomplete="off" name="dob" id="dob"
+												type="text" aria-describedby="dobHelp">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Mobile Numbe* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input class="form-control " required value="{{accountant.mobile_no}}"
+												oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+												placeholder="Enter Mobile Number" maxlength="10" autocomplete="off"
+												name="mobile" id="mobile" type="number" aria-describedby="dobHelp">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Email address* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input class="form-control " readonly value="{{accountant.email}}" required placeholder="Enter Email address"
+												autocomplete="off" name="email" id="email" type="text"
+												aria-describedby="dobHelp">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Qualification* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input class="form-control "  value="{{accountant.Qualification}}" required placeholder="Enter Qualification"
+												autocomplete="off" name="qualification" id="qualification" type="text"
+												aria-describedby="dobHelp">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Salary* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input class="form-control " value="{{accountant.Salary}}" required placeholder="Enter Salary"
+												autocomplete="off" name="salary" id="salary" type="number"
+												aria-describedby="dobHelp">
+										</div>
+									</div>
+																		
+									<div class="row">
+										<div class="col-lg-12 text-center">
+											<button class="addProductSubmit-btn" type="submit">Update</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="add-product-content">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="product-description">
+								<div class="body-area">
+
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">Profile Picture *</h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<div class="img-upload custom-image-upload">
+												<img src="{{accountant.profile.url}}" alt="">
+													<input type="file" name="profile"  class="img-upload-p py-4 px-3"
+														id="image-upload">
+												</div>
+												
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
 </div>
+
+{% endfor %}
+
+
+
+
+
+
 {% endblock body %}
