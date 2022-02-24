@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User,AbstractUser,PermissionsMixin
 from django.db.models.deletion import DO_NOTHING
 from .manager import CustomeUserManger
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy  as _
 # Create your models here.
 
 class Department(models.Model):

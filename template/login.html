@@ -12,11 +12,19 @@
   <!-- Google fonts - Roboto -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
   <!-- Choices CSS-->
-  <link rel="stylesheet" href="{% static 'vendor/choices.js/public/assets/styles/choices.min.css' %} ">
+  <link rel="stylesheet" href="{% static 'css/common.css' %} ">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %} ">
+  <link rel="stylesheet" href="{% static 'css/bootstrap-coloroicker.css' %} ">
   <!-- Custom Scrollbar-->
-  <link rel="stylesheet" href="{% static 'vendor/overlayscrollbars/css/OverlayScrollbars.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dark-side-style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">
+  <link rel="stylesheet" href="{% static 'css/icofont.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/jquery.tagit.css' %}">
+  <link rel="stylesheet" href="{% static 'css/plugin.css' %}">
+  <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+  <link rel="stylesheet" href="{% static 'css/waves.min.css' %}">
   <!-- theme stylesheet-->
-  <link rel="stylesheet" href="{% static 'css/style.default.css' %}" id="theme-stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" id="theme-stylesheet">
   <!-- Custom stylesheet - for your changes-->
   <link rel="stylesheet" href="{% static 'css/custom.css' %}">
   <!-- Favicon-->
@@ -28,67 +36,72 @@
 </head>
 
 <body>
-  <div class="login-page d-flex align-items-center bg-gray-100">
-    <div class="container mb-3">
-      <div class="row">
-        <div class="col-md-6 mx-auto">
-          <div class="card">
-            <div class="card-body p-5">
-              <header class="text-center mb-5">
-                <h1 class="text-xxl text-gray-400 text-uppercase">universal <strong
-                    class="text-primary">College</strong></h1>
-              </header>
-              <form class="login-form" method="POST" action="">
-                {% csrf_token %}
-                <div class="row">
-                  {% if messages %}
-                  {% for msg in messages %}
-                  <div class="col-lg-7 mx-auto">
-                    <div class="input-material-group mb-3 text-danger">
-                      {{msg}}
-                    </div>
-                  </div>
-                  {% endfor %}
-                  {% endif %}
-                  <div class="col-lg-7 mx-auto">
-                    <div class="input-material-group mb-3">
-                      <input class="input-material" id="login-username" type="text" name="loginUsername"
-                        autocomplete="off" required data-validate-field="loginUsername">
-                      <label class="label-material" for="login-username">Username</label>
-                    </div>
-                    <div class="input-material-group mb-4">
-                      <input class="input-material" id="login-password" type="password" name="loginPassword" 
-                        data-validate-field="loginPassword">
-                      <label class="label-material" for="login-password">Password</label>
-                    </div>
-                  </div>
-                  <div class="col-12 text-center">
-                    <button class="btn btn-primary mb-3" id="login" type="submit">Login</button><br><a
-                      class="text-xs text-paleBlue" href="{% url 'password_reset' %}">Forgot Password? </a>
-                    <!-- This should be submit button but I replaced it with <a> for demo purposes-->
-                  </div>
+  <section class="login-signup">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="dropdown-overlay"></div>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-log" role="tabpanel" aria-labelledby="nav-log-tab">
+              <div class="login-area">
+                <div class="header-area">
+                  <h4 class="title">LOGIN NOW</h4>
                 </div>
-              </form>
+                <div class="login-form signin-form">
+                  {% if messages %}
+<div id="alert" class="alert alert-danger text-center" role="alert">
+  {% for msg in messages %}
+  <h6 class="alert-heading">{{msg}}</h6>
+  {% endfor %}
+</div>
+{% endif %}
+                  
+                  <form class="login-form" action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-input">
+                      <input type="email" name="email" placeholder="Type Email Address" required=""
+                        >
+                      <i class="fa fa-envelope"></i>
+                    </div>
+                    <div class="form-input">
+                      <input type="password" class="Password" name="password" placeholder="Type Password" required=""
+                        >
+                      <i class="fa fa-key"></i>
+                    </div>
+                    <div class="form-forgot-pass">
+                      <div class="right">
+                        <a href="{% url 'password_reset' %}">
+                          Forgot Password?
+                        </a>
+                      </div>
+                    </div>
+                    <button type="submit" class="submit-btn">Login</button>
+                    
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+  </section>
   <!-- JavaScript files-->
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %} "></script>
-  <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
-  <script src="{% static 'vendor/just-validate/js/just-validate.min.js' %}"></script>
-  <script src="{% static 'vendor/choices.js/public/assets/scripts/choices.min.js' %}"></script>
-  <script src="{% static 'vendor/overlayscrollbars/js/OverlayScrollbars.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %} "></script>
+  <script src="{% static 'jsChart.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+  <script src="{% static 'js/jquery.slimscroll.min.js' %}"></script>
+  <script src="{% static 'js/jqueryui.min.js' %}"></script>
+  <script src="{% static 'js/load.js' %}"></script>
+  <script src="{% static 'js/myscript.js' %}"></script>
+  <script src="{% static 'js/nicEdit.js' %}"></script>
+  <script src="{% static 'js/notify.js' %}"></script>
+  <script src="{% static 'js/plugin.js' %}"></script>
+  <script src="{% static 'js/tag-it.js' %}"></script>
+  <script src="{% static 'js/waves.min.js' %}"></script>
   <!-- Main File-->
-  <script src="{% static 'js/front.js' %}"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
   <script>
-    // ------------------------------------------------------- //
-    //   Inject SVG Sprite - 
-    //   see more here 
-    //   https://css-tricks.com/ajaxing-svg-sprite/
-    // ------------------------------------------------------ //
+
     function injectSvgSprite(path) {
 
       var ajax = new XMLHttpRequest();
@@ -101,13 +114,8 @@
         document.body.insertBefore(div, document.body.childNodes[0]);
       }
     }
-    // this is set to BootstrapTemple website as you cannot 
-    // inject local SVG sprite (using only 'icons/orion-svg-sprite.svg' path)
-    // while using file:// protocol
-    // pls don't forget to change to your domain :)
     injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg');
   </script>
-  <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </body>

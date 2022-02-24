@@ -9,13 +9,15 @@ from django.http.response  import JsonResponse
 from django.http import HttpResponse
 import os
 from datetime import date
+from .form import Password_confirm
 
 # Login 
 def index(request):
+    print(Password_confirm)
     if not request.user.is_authenticated:
         if request.method=='POST':
-            username = request.POST['loginUsername']
-            password = request.POST['loginPassword']
+            username = request.POST['email']
+            password = request.POST['password']
             user = authenticate(email = username,password=password)
             if user:
                 login(request, user)

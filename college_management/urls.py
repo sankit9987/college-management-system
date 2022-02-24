@@ -9,17 +9,15 @@ urlpatterns = [
     path('',views.index,name="index"),
     path("logout",views.user_logout,name="logout"),
 
-
     path("password-reset",auth_views.PasswordResetView.as_view(template_name="password-reset.html",form_class=Password_reset),name="password_reset"),
 
 
     path("password-reset/Done",auth_views.PasswordResetDoneView.as_view(template_name="password_reset_done.html"),name="password_reset_done"),
 
-    path("password-reset-Confirm/<uidb64>/<token>/",auth_views.PasswordResetConfirmView.as_view(),name="password_reset_confirm"),
+    path("password-reset-confirm/<uidb64>/<token>/",auth_views.PasswordResetConfirmView.as_view(template_name="password_reset_Confirm.html",form_class=Password_confirm), name="password_reset_confirm"),
 
 
-    
-    path("password-reset-Complete/",auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_Complete.html"),name="password_reset_complete"),
+    path("password-reset-complete/",auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_Complete.html"),name="password_reset_complete"),
     
     path("Edit",views.edit,name="edit"),
     path("Notification",views.notification,name="Notification"),
