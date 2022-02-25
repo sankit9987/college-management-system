@@ -1,69 +1,93 @@
 {% extends 'Librarian/base.html' %}
-{% block title %}View Assign Book{% endblock title %}
+{% block title %}View Faculty{% endblock title %}
 {% block body %}
-<div class="bg-gray-200 text-sm">
-  <div class="container-fluid">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb mb-0 py-3">
-        <li class="breadcrumb-item"><a class="fw-light" href="{% url 'librarian_Dashboard' %}">Home</a></li>
-        <li class="breadcrumb-item active fw-light" aria-current="page"><b>View Assign Book</b> </li>
-      </ol>
-    </nav>
+
+<div class="content-area">
+  {% if messages %}
+  <div id="alert" class="alert alert-success text-center" role="alert">
+    {% for msg in messages %}
+    <h6 class="alert-heading">{{msg}}</h6>
+    {% endfor %}
   </div>
-</div>
-{% if messages %}
-<div id="alert" class="alert alert-success text-center" role="alert">
-  {% for msg in messages %}
-  <h6 class="alert-heading">{{msg}}</h6>
-  {% endfor %}
-</div>
-{% endif %}
-<div class="card-body" >
-  <a href="{% url 'Assign_Book' %}" class="btn btn-primary " type="button" style="border-radius: 20px"><i
-      class="fa fa-plus-circle" aria-hidden="true"></i> Add
-  </a>
-</div>
-<div class="container-fluid">
-  <div class="card">
-    <div class="card-header border-bottom">
-      <h3 class="h4 mb-0">All Assign book</h3>
-    </div>
-    <div class="card-body ">
-      <div class="table-responsive">
-        <table class="table text-sm mb-0 data">
-          <thead>
-            <tr>
-              <th>Sr No.</th>
-              <th>Student Name</th>
-              <th>Book Name</th>
-              <th>Year</th>
-              <th>Department</th>
-              <th>Assign Date</th>
-              <th>Due Date</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
+  {% endif %}
+  <div class="mr-breadcrumb">
+    <div class="row">
+      <div class="col-lg-12">
+        <h4 class="heading">View Assign Book</h4>
+        <ul class="links">
+          <li>
+            <a href="{% url 'librarian_Dashboard' %}">Dashbord</a>
+          </li>
+          <li>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+          </li>
 
-            {% for view in view %}
-            <tr>
-              <th scope="row">{{forloop.counter}}</th>
-              <td>{{view.student}}</td>
-              <td>{{view.book}}</td>
-              <td>{{view.student.year}}</td>
-              <td>{{view.student.department}}</td>
-              <td>{{view.assign_date}}</td>
-              <td>{{view.due_date}}</td>
-              <td><a href="#" aria-hidden="true" style="color:black;"
-                title="Update Status">
-                  <i class="fa fa-eye"></i>
-                </a></td>
-            </tr>
-            {% endfor %}
+          <li>
+            <a href="{% url 'view_assig_Book' %}">View Assign Book</a>
+          </li>
 
-          </tbody>
-        </table>
+        </ul>
       </div>
     </div>
   </div>
-  {% endblock body %}
+  <div class="product-area">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="mr-table allproduct dataTables_wrapper">
+
+
+          <div class="table-responsiv dataTables_wrapper">
+            <div id="geniustable_wrapper " class="dataTables_wrapper dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-sm-12 ">
+                  <table id="geniustable55" class="table table-hover dt-responsive dataTable no-footer dtr-inline"
+                    cellspacing="0" width="100%" a style="width: 100%;">
+                    <div class="col-sm-4 table-contents"
+                      style="position: absolute; top: 4%; right: 0px; z-index:99999999;"><a class="add-btn"
+                        href="{% url 'Assign_Book' %}"><i class="fa fa-plus" aria-hidden="true"></i>
+                        <span class="remove-mobile">Add <span></span></span></a></div>
+                    <thead>
+                      <tr>
+                        <th>Sr No.</th>
+                        <th>Student Name</th>
+                        <th>Book Name</th>
+                        <th>Year</th>
+                        <th>Department</th>
+                        <th>Assign Date</th>
+                        <th>Due Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    {% for view in view %}
+                    <tr>
+                      <th scope="row">{{forloop.counter}}</th>
+                      <td>{{view.student}}</td>
+                      <td>{{view.book}}</td>
+                      <td>{{view.student.year}}</td>
+                      <td>{{view.student.department}}</td>
+                      <td>{{view.assign_date}}</td>
+                      <td>{{view.due_date}}</td>
+                      <td><a href="#" aria-hidden="true" style="color:black;" title="Update Status">
+                          <i class="fa fa-eye"></i>
+                        </a></td>
+                    </tr>
+                    {% endfor %}
+
+                    <tbody>
+
+                    </tbody>
+
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+{% endblock body %}

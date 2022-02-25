@@ -1,61 +1,88 @@
 {% extends 'Librarian/base.html' %}
 {% block title %}Assign Book{% endblock title %}
 {% block body %}
-<div class="bg-gray-200 text-sm">
-	<div class="container-fluid">
-		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb mb-0 py-3">
-				<li class="breadcrumb-item"><a class="fw-light" href="{% url 'librarian_Dashboard' %}">Home</a></li>
-				<li class="breadcrumb-item " aria-current="page"><a class="fw-light"
-						href="{% url 'view_assig_Book' %}">View Assign Book</a>
-				</li>
-				<li class="breadcrumb-item active fw-light" aria-current="page"><b>Assign Book</b>
-				</li>
-			</ol>
-		</nav>
+<div class="content-area">
+	{% if messages %}
+	<div id="alert" class="alert alert-danger text-center" role="alert">
+		{% for msg in messages %}
+		<h6 class="alert-heading">{{msg}}</h6>
+		{% endfor %}
 	</div>
-</div>
-<div class="container">
-	<div class="card">
-		<h2 class="card-title mx-5 mt-3 text-success">Assign Book</h2>
-		<div class="card-body">
-			<form action="" method="POST">
-				{% csrf_token %}
-			<div class="mb-3">
-				<label class="col-sm-3 form-label" for="name">Student Name</label>
-				<select class="form-select mb-3"  id="name" required name="name">
-					<option>Select Student Name</option>
-					{% for Assign_student_name in Assign_student_name %}
-						{% comment %} {% ifequal  Assign_student_name.student False %} {% endcomment %}
-							{% for s in student %}
-								<option>{{s.name}}</option>
-							{% endfor %}
-						{% comment %} {% endifequal %} {% endcomment %}
-					{% endfor %}
-				</select>
-			</div>
-			<div class="mb-3">
-				<label class="col-sm-3 form-label" for="Book">Book Name</label>
-				<select class="form-select mb-3"  id="Book" name="Book">
-					<option>Select Book Name</option>
-						{% for book in book %}
-							<option>{{book.Book_name}}</option>
-						{% endfor %}
-				</select>
-			</div>
-			<div class="mb-3">
-				<label class="form-label" for="bod">Assign Date</label>
-				<input class="form-control datepicker" required placeholder="Enter book Assign Date" autocomplete="off" name="assign_date" id="assign_date" type="text" aria-describedby="dobHelp">
-			</div>
-			<div class="mb-3">
-				<label class="form-label" for="bod">Due Date</label>
-				<input class="form-control datepicker" required placeholder="Enter book Dua Date" autocomplete="off" name="dua_date" id="dua_date" type="text" aria-describedby="dobHelp">
-			</div>
-			<div class="mb-3">
-				<button class="btn btn-primary float-right" type="submit">Add</button>
+	{% endif %}
+	<style>
+		#ui-datepicker-div {
+			background-color: #adadad;
+		}
+	</style>
+	<div class="mr-breadcrumb">
+		<div class="row">
+			<div class="col-lg-12">
+				<h4 class="heading d-flex justify-content-between">
+					<span>Assign Book </span>
+					<a class="add-btn" href="{% url 'view_assig_Book' %}">
+						<i class="fa fa-arrow-left" aria-hidden="true"></i>
+						Back
+					</a>
+				</h4>
+				<ul class="links">
+					<li>
+						<a href="{% url 'librarian_Dashboard' %}">Dashbord</a>
+					</li>
+					<li>
+						<i class="fa fa-chevron-right" aria-hidden="true"></i>
+					</li>
+					<li>
+						<a href="{% url 'view_assig_Book' %}">View Assign Book </a>
+					</li>
+					<li>
+						<i class="fa fa-chevron-right" aria-hidden="true"></i>
+					</li>
+					<li>
+						<a href="{% url 'Assign_Book' %}">Assign Book</a>
+					</li>
+
+				</ul>
 			</div>
 		</div>
 	</div>
+	<form action="" method="POST">
+		{% csrf_token %}
+	<div class="mb-3">
+		<label class="col-sm-3 form-label" for="name">Student Name</label>
+		<select class="form-select mb-3"  id="name" required name="name">
+			<option>Select Student Name</option>
+			
+				{% comment %} {% ifequal  Assign_student_name.student False %} {% endcomment %}
+					{% for s in student %}
+						<option>{{s.name}}</option>
+					{% endfor %}
+				{% comment %} {% endifequal %} {% endcomment %}
+			
+		</select>
+	</div>
+	<div class="mb-3">
+		<label class="col-sm-3 form-label" for="Book">Book Name</label>
+		<select class="form-select mb-3"  id="Book" name="Book">
+			<option>Select Book Name</option>
+				{% for book in book %}
+					<option>{{book.Book_name}}</option>
+				{% endfor %}
+		</select>
+	</div>
+	<div class="mb-3">
+		<label class="form-label" for="bod">Assign Date</label>
+		<input class="form-control datepicker" required placeholder="Enter book Assign Date" autocomplete="off" name="assign_date" id="assign_date" type="text" aria-describedby="dobHelp">
+	</div>
+	<div class="mb-3">
+		<label class="form-label" for="bod">Due Date</label>
+		<input class="form-control datepicker" required placeholder="Enter book Dua Date" autocomplete="off" name="dua_date" id="dua_date" type="text" aria-describedby="dobHelp">
+	</div>
+	<div class="mb-3">
+		<button class="btn btn-primary float-right" type="submit">Add</button>
+	</div>
+	</form>
 </div>
 
+
+</div>
 {% endblock body %}

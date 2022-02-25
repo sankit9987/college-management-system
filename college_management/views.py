@@ -336,9 +336,14 @@ def add_librarian(request):
             salary = request.POST['salary']
             profile = request.FILES['profile']
             password = request.POST['password']
-            Librarian.objects.create_librarian(email=email, password=password, name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob, profile=profile, Qualification=qualification, Salary=salary)
-            messages.success(request,"Add successfully!!!") 
-            return redirect("View_librarian")
+            l = CustomeUser.objects.filter(email=email)
+            if l:
+                messages.error(request,"User already exists!!!") 
+                return redirect("add_librarian")
+            else:
+                Librarian.objects.create_librarian(email=email, password=password, name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob, profile=profile, Qualification=qualification, Salary=salary)
+                messages.success(request,"Add successfully!!!") 
+                return redirect("View_librarian")
         return render(request,"Hod/Add_librarian.html",{})
     else:
         if request.user.is_faculty:
@@ -445,9 +450,15 @@ def add_student(request):
             department = request.POST['department']
             depart = Department.objects.get(Department_name=department)
             YEAR = Year.objects.get(name=year)
-            Student.objects.create_student(email=email, password=password, name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob, profile=profile, year=YEAR, department=depart)
-            messages.success(request,"Add successfully!!!") 
-            return redirect("view_student")
+            s = CustomeUser.objects.filter(email=email)
+            if s:
+                messages.error(request,"User already exist!!!") 
+                return redirect('add_student')
+            else:
+                
+                Student.objects.create_student(email=email, password=password, name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob, profile=profile, year=YEAR, department=depart)
+                messages.success(request,"Add successfully!!!") 
+                return redirect("view_student")
         department = Department.objects.all()
         return render(request,"Accountant/Add_student.html",{'department':department})
     else:
@@ -497,9 +508,7 @@ def student(request,email):
             gender = request.POST['gender']
             dob = request.POST['dob']
             mobile = request.POST['mobile']
-            year = request.POST['year']
-            YEAR = Year.objects.get(name=year)
-            Student.objects.filter(email=email).update(name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob,year=YEAR)
+            Student.objects.filter(email=email).update(name=name, mobile_no=mobile, Gender=gender, Address=address, date_of_birth=dob)
             if request.FILES:
                 profile = request.FILES['profile']
                 faclty = Student.objects.get(email = email)

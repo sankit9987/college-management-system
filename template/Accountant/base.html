@@ -82,14 +82,14 @@
 										<div class="dropdownmenu-wrapper">
 											<ul>
 												<li>
-													<a href="https://geniuscart.royalscripts.com/user/dashboard"><i class="fa fa-user" aria-hidden="true"></i> Edit User</a>
+													<a href="{% url 'edit_accountant' %}"><i class="fa fa-user" aria-hidden="true"></i> Edit User</a>
 												</li>
 
 												<li>
 													<a href="https://geniuscart.royalscripts.com/vendor/profile"><i class="fa fa-key" aria-hidden="true" class="px-4"></i>Change Password</a>
 												</li>
 												<li>
-													<a href="https://geniuscart.royalscripts.com/user/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
+													<a href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
 												</li>
 
 											</ul>
@@ -139,7 +139,7 @@
   <script src="{% static 'vendor/choices.js/public/assets/scripts/choices.min.js' %}"></script>
   <script src="{% static 'vendor/overlayscrollbars/js/OverlayScrollbars.min.js' %}"></script>
   {% comment %} <script src="{% static 'js/front.js' %}"></script> {% endcomment %}
-  <script src="{% static 'js/custom.js' %}"></script>
+  <!-- <script src="{% static 'js/custom.js' %}"></script> -->
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
   <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>

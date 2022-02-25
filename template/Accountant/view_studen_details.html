@@ -132,30 +132,8 @@
 												aria-describedby="dobHelp">
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-lg-12">
-											<div class="left-area">
-												<h4 class="heading">Qualification* </h4>
-											</div>
-										</div>
-										<div class="col-lg-12">
-											<input class="form-control "  value="{{student.Qualification}}" required placeholder="Enter Qualification"
-												autocomplete="off" name="qualification" id="qualification" type="text"
-												aria-describedby="dobHelp">
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-lg-12">
-											<div class="left-area">
-												<h4 class="heading">Salary* </h4>
-											</div>
-										</div>
-										<div class="col-lg-12">
-											<input class="form-control " value="{{student.Salary}}" required placeholder="Enter Salary"
-												autocomplete="off" name="salary" id="salary" type="number"
-												aria-describedby="dobHelp">
-										</div>
-									</div>
+									
+									
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="left-area">
@@ -173,12 +151,12 @@
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="left-area">
-												<h4 class="heading">Subject student* </h4>
+												<h4 class="heading">Year* </h4>
 											</div>
 										</div>
 										<div class="col-lg-12">
-											<select class="form-select mb-3" required name="subject" id="subject" disabled="true">
-												<option>{{student.year}}</option>
+											<select class="form-select mb-3" required name="year" id="subject" disabled="true">
+												<option value="{{student.year}}">{{student.year}}</option>
 												
 											</select>
 										</div>
