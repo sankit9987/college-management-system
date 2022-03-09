@@ -63,4 +63,5 @@ urlpatterns = [
     path("Faculty_Dashboard",views.Faculty_Dashboard,name="Faculty_Dashboard"),
     path("Save_marks",views.Save_marks,name="Save_marks"),
     path("save_attendance",views.save_attendance,name="save_attendance"),
+    path("edit-faculty",views.edit_faculty,name="edit_faculty"),
 ]

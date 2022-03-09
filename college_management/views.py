@@ -822,6 +822,42 @@ def Add_attendance(request):
         else:
             return redirect("Student_Dashboard")
 @login_required(login_url='index')
+def edit_faculty(request):
+    if request.user.is_faculty:
+        if request.method=="POST":
+            user = CustomeUser.objects.get(id=request.user.id)
+            name = request.POST['Name']
+            address = request.POST['address']
+            gender = request.POST['gender']
+            dob = request.POST['dob']
+            mobile = request.POST['mobile']
+            password = request.POST['password']
+            l=user.set_password(password)
+            user.save()
+            username = request.user.email
+            user=authenticate(email = username,password=password)
+            if user:
+                login(request, user)
+            Faculty.objects.filter(email=request.user).update(name=name,Gender=gender,Address=address,mobile_no=mobile,date_of_birth=dob)
+            messages.success(request,"Update successfully!!!") 
+            return redirect("Faculty_Dashboard")
+        notification = Notification.objects.filter(Q(whome="Faculty") | Q(whome="All")).filter(status=False)
+        notification_count = Notification.objects.filter(Q(whome="Faculty") | Q(whome="All")).filter(status=False).count()
+        year = Year.objects.all()
+        depart = Department.objects.get(faculty=request.user)
+        
+        
+        return render(request,"Faculty/edit_user.html",{"year":year,"notification":notification,"notification_count":notification_count})
+    else:
+        if request.user.is_superuser:
+            return redirect("Hod_dashboard")
+        elif request.user.is_accountant:
+            return redirect("accountant_Dashboard")
+        elif request.user.is_library:
+            return redirect("librarian_Dashboard")
+        else:
+            return redirect("Student_Dashboard")
+@login_required(login_url='index')
 def save_attendance(request):
     if request.user.is_faculty:
         if request.method=="POST":
