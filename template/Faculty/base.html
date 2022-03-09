@@ -182,16 +182,24 @@ $('#attendance').change(function (e) {
         dataType: "json",
         success: function (data) {
           var html = "";
+		  let count=0;
           let student = data.student;
             $.each(student, function (index) {
+				count=+1
               html += `<tr><td><input type="hidden" value="${student[index].id}" name="name">${student[index].name}</td>
                 <td><select class="form-select" name="status" id="status">
                   <option>Absent</option>
                   <option >Present</option>
                 </select></td></tr>`;
             });
+			if(count>0){
             html += "<tr><td colspan='2'><button class='btn btn-success'>Save</button></td></tr>";
-            $('#student_list').html(html);
+			}
+			else{
+				html +="<tr align='center'><td colspan='2'> No Student Found</td></tr> "
+			}
+			$('#student_list').html(html);
+
         },
       })
     });
@@ -210,12 +218,19 @@ $('#year').change(function (e) {
         dataType: "json",
         success: function (data) {
           var html = "";
+		  let count=0;
           let student = data.student;
           $.each(student, function (index) {
+			  count+=1;
             html += `<tr><td><input type="hidden" value="${student[index].id}" name="name">${student[index].name}</td>
               <td><input type="tel" name="marks" placeholder="Enter Marks" required maxlength="4"class="form-control"></td></tr>`;
           });
-          html += "<tr><td colspan='2'><button class='btn btn-success'>Save</button></td></tr>";
+		  if(count>0){
+            html += "<tr><td colspan='2'><button class='btn btn-success'>Save</button></td></tr>";
+			}
+			else{
+				html +="<tr align='center'><td colspan='2'> No Student Found</td></tr> "
+			}
           $('#student_list').html(html);
         },
       })
