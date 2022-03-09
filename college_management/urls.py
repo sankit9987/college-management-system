@@ -48,11 +48,13 @@ urlpatterns = [
     path('Librarian_Dashboard',views.librarian_Dashboard,name="librarian_Dashboard"),
     path('Assign_Book',views.Assign_Book,name="Assign_Book"),
     path('view_assign_Book',views.view_assig_Book,name="view_assig_Book"),
+    path('view-assign-Book/<int:id>',views.view_assign_book_details,name="view_assign_book_details"),
     path('Book',views.Book,name="Book"),
     path('Add-Book',views.add_book,name="Add_book"),
 
     path('Student_Dashboard',views.Student_Dashboard,name="Student_Dashboard"),
     path("edit-profile",views.edit_student,name="edit_student"),
+    path("attendance",views.attendance,name="attendance"),
 
 
     path("Add_marks",views.Add_marks,name="Add_marks"),

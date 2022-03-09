@@ -10,8 +10,27 @@
 	</div>
 	{% endif %}
 	<style>
+		.input-dateField {
+			border: none;
+			box-sizing: border-box;
+			outline: 0;
+			position: relative;
+			width: 100%;
+		}
+		input[type="date"]::-webkit-calendar-picker-indicator {
+			background: transparent;
+			bottom: 0;
+			color: transparent;
+			cursor: pointer;
+			height: auto;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: auto;
+		}
 		#ui-datepicker-div {
-			background-color: #adadad;
+			background-color: rgb(94, 92, 92);
 		}
 	</style>
 	<div class="mr-breadcrumb">
@@ -50,13 +69,15 @@
 	<div class="mb-3">
 		<label class="col-sm-3 form-label" for="name">Student Name</label>
 		<select class="form-select mb-3"  id="name" required name="name">
-			<option>Select Student Name</option>
 			
-				{% comment %} {% ifequal  Assign_student_name.student False %} {% endcomment %}
-					{% for s in student %}
+			<option>Select Student Name</option>
+			{% for s in student %}
+			
+			
+				
 						<option>{{s.name}}</option>
-					{% endfor %}
-				{% comment %} {% endifequal %} {% endcomment %}
+						 
+						{% endfor %}
 			
 		</select>
 	</div>
@@ -65,17 +86,20 @@
 		<select class="form-select mb-3"  id="Book" name="Book">
 			<option>Select Book Name</option>
 				{% for book in book %}
+				{% if book.quantity >= 1 %}
 					<option>{{book.Book_name}}</option>
+					{% endif %}
 				{% endfor %}
 		</select>
 	</div>
 	<div class="mb-3">
 		<label class="form-label" for="bod">Assign Date</label>
-		<input class="form-control datepicker" required placeholder="Enter book Assign Date" autocomplete="off" name="assign_date" id="assign_date" type="text" aria-describedby="dobHelp">
+		<input class="form-control input-dateField" required placeholder="Enter book Assign Date" autocomplete="off" name="assign_date" id="assign_date" type="date" min="{{a|date:"Y-m-d"}}">
 	</div>
 	<div class="mb-3">
-		<label class="form-label" for="bod">Due Date</label>
-		<input class="form-control datepicker" required placeholder="Enter book Dua Date" autocomplete="off" name="dua_date" id="dua_date" type="text" aria-describedby="dobHelp">
+		<label class="form-label" for="bod">Due Date </label>
+		<input class="form-control input-dateField" required 
+		placeholder="dd-mm-yyyy" autocomplete="off" name="dua_date" id="dua_date" type="date" min="{{a|date:"Y-m-d"}}" aria-describedby="dobHelp">
 	</div>
 	<div class="mb-3">
 		<button class="btn btn-primary float-right" type="submit">Add</button>

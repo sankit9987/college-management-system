@@ -61,13 +61,13 @@
                     {% for view in view %}
                     <tr>
                       <th scope="row">{{forloop.counter}}</th>
-                      <td>{{view.student}}</td>
+                      <td>{{view.student.name}}</td>
                       <td>{{view.book}}</td>
                       <td>{{view.student.year}}</td>
                       <td>{{view.student.department}}</td>
                       <td>{{view.assign_date}}</td>
                       <td>{{view.due_date}}</td>
-                      <td><a href="#" aria-hidden="true" style="color:black;" title="Update Status">
+                      <td><a href="{% url 'view_assign_book_details' view.id %}" aria-hidden="true" style="color:black;" title="Update Status">
                           <i class="fa fa-eye"></i>
                         </a></td>
                     </tr>

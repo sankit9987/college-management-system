@@ -1,0 +1,86 @@
+{% extends 'Student/base.html' %}
+{% block title %}View Accountant{% endblock title %}
+{% block body %}
+
+<div class="content-area">
+  {% if messages %}
+<div id="alert" class="alert alert-success text-center" role="alert">
+  {% for msg in messages %}
+  <h6 class="alert-heading">{{msg}}</h6>
+  {% endfor %}
+</div>
+{% endif %}
+  <div class="mr-breadcrumb">
+    <div class="row">
+      <div class="col-lg-12">
+        <h4 class="heading">All Accountant</h4>
+        <ul class="links">
+          <li>
+            <a href="{% url 'index' %}">Dashbord</a>
+          </li>
+          <li>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+          </li>
+         
+          <li>
+            <a href="{% url 'View_accountant' %}">Accountant</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="product-area">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="mr-table allproduct dataTables_wrapper">
+
+
+          <div class="table-responsiv dataTables_wrapper">
+
+            <div id="geniustable_wrapper " class="dataTables_wrapper dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-sm-12 ">
+                  <table id="geniustable55" class="table table-hover dt-responsive dataTable no-footer dtr-inline"
+                    cellspacing="0" width="100%"  a style="width: 100%;">
+                    <div class="col-sm-4 table-contents"  style="position: absolute; top: 4%; right: 0px; z-index:99999999;"><a class="add-btn" href="{% url 'add_accountant' %}"><i class="fa fa-plus" aria-hidden="true"></i>
+                      <span class="remove-mobile">Add <span></span></span></a></div>
+                    <thead>
+                      <tr role="row">
+                        <th class="sorting_disabled"  style="width: 167px;">Sr No.</th>
+                        <th class="sorting_disabled"  style="width: 112px;">Name</th>
+                        <th class="sorting_disabled"  style="width: 120px;">Gender</th>
+                        <th class="sorting_disabled"  style="width: 194px;">Mobile Number</th>
+                        <th class="sorting_disabled"  style="width: 93px;">Actions</th>
+                      </tr>
+                    </thead>
+                    {% for attendance in attendance %}
+
+                    <tr>
+                      <th scope="row">{{forloop.counter}}</th>
+                      <td>{{attendance.student_id.name}}</td>
+                      <td>{{attendance.subject}}</td>
+                      <td>{{attendance.attendance_date}}</td>
+                      <td>{{attendance.status}}</td>
+                      
+                    </tr>
+                    {% endfor %}
+
+                    <tbody>
+                     
+                    </tbody>
+
+                  </table>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock body %}

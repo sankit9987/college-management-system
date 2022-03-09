@@ -10,6 +10,7 @@ from django.http import HttpResponse
 import os
 from datetime import date
 from .form import Password_confirm
+from datetime import date
 
 # Login 
 def index(request):
@@ -568,7 +569,9 @@ def librarian_Dashboard(request):
     if request.user.is_library:
         notification = Notification.objects.filter(Q(whome="Librarian") | Q(whome="All")).filter(status=False)
         notification_count = Notification.objects.filter(Q(whome="Librarian") | Q(whome="All")).filter(status=False).count()
-        return render(request,"Librarian/librarian_Dashboard.html",{"notification":notification,"notification_count":notification_count})
+        assign_book = Assign_book.objects.filter(status="assign").count()
+        book = Add_Book.objects.all().count()
+        return render(request,"Librarian/librarian_Dashboard.html",{"notification":notification,"notification_count":notification_count,"assign_book":assign_book,"book":book})
     else:
         if request.user.is_faculty:
             return redirect("Faculty_Dashboard")
@@ -583,7 +586,7 @@ def view_assig_Book(request):
     if request.user.is_library:
         notification = Notification.objects.filter(Q(whome="Librarian") | Q(whome="All")).filter(status=False)
         notification_count = Notification.objects.filter(Q(whome="Librarian") | Q(whome="All")).filter(status=False).count()
-        view = Assign_book.objects.all()
+        view = Assign_book.objects.filter(status="assign")
         return render(request,"Librarian/View_assign_book.html",{"view":view,"notification":notification,"notification_count":notification_count})
     else:
         if request.user.is_faculty:
@@ -607,14 +610,23 @@ def Assign_Book(request):
             assign_date = request.POST['assign_date']
             dua_date = request.POST['dua_date']
             b = Add_Book.objects.get(Book_name=book)
+            b.quantity = int(b.quantity) -1
+            b.save()
             name = Student.objects.get(name=student)
-            Assign_book.objects.create(student=name,book=b,assign_date=assign_date,due_date=dua_date)
+            Assign_book.objects.create(student=name,book=b,assign_date=assign_date,due_date=dua_date,status="assign")
             messages.success(request,"Book Assign")
             return redirect("view_assig_Book")
-        Assign_student_name = Assign_book.objects.filter(status=True)
+        Assign_student_name = Assign_book.objects.filter(status="assign")
+        
         s = Student.objects.all()
+
+        for student in Assign_student_name:
+            s=s.exclude(id=student.student.id)
+            
+        a=date.today()
+        
         book = Add_Book.objects.all()
-        return render(request,"Librarian/Assign_book.html",{"student":s,"Assign_student_name":Assign_student_name,"book":book,"notification":notification,"notification_count":notification_count})
+        return render(request,"Librarian/Assign_book.html",{"student":s,"a":a,"Assign_student_name":Assign_student_name,"book":book,"notification":notification,"notification_count":notification_count})
 
     else:
         if request.user.is_faculty:
@@ -625,7 +637,29 @@ def Assign_Book(request):
             return redirect("accountant_Dashboard")
         else:
             return redirect("Student_Dashboard")
-
+@login_required(login_url='index')
+def view_assign_book_details(request,id):
+    if request.user.is_library:
+        notification = Notification.objects.filter(Q(whome="Librarian") | Q(whome="All")).filter(status=False)
+        notification_count = Notification.objects.filter(Q(whome="Librarian") | Q(whome="All")).filter(status=False).count()
+        book = Assign_book.objects.filter(id=id)
+        if request.method=='POST':
+            statu = request.POST['status']
+            Assign_book.objects.filter(id=id).update(status=statu)
+            b= Assign_book.objects.get(id=id)
+            b.book.quantity=int(b.book.quantity) +1
+            b.book.save()
+            return redirect("view_assig_Book")
+        return render(request,"Librarian/view_assign_book_details.html",{"notification":notification,"notification_count":notification_count,"book":book[0]})
+    else:
+        if request.user.is_faculty:
+            return redirect("Faculty_Dashboard")
+        elif request.user.is_superuser:
+            return redirect("Hod_dashboard")
+        elif request.user.is_accountant:
+            return redirect("accountant_Dashboard")
+        else:
+            return redirect("Student_Dashboard")
 @login_required(login_url='index')
 def Book(request):
     if request.user.is_library:
@@ -811,9 +845,37 @@ def save_attendance(request):
 
 @login_required(login_url='index')
 def Student_Dashboard(request):
-    notification = Notification.objects.filter(Q(whome="Student") | Q(whome="All")).filter(status=False)
-    notification_count = Notification.objects.filter(Q(whome="Student") | Q(whome="All")).filter(status=False).count()
-    return render(request,"Student/student_dashboard.html",{"notification":notification,"notification_count":notification_count})
-
-
     
+    if request.user.is_student:
+        notification = Notification.objects.filter(Q(whome="Student") | Q(whome="All")).filter(status=False)
+        notification_count = Notification.objects.filter(Q(whome="Student") | Q(whome="All")).filter(status=False).count()
+        return render(request,"Student/student_dashboard.html",{"notification":notification,"notification_count":notification_count})
+    else:
+        if request.user.is_superuser:
+            return redirect("Hod_dashboard")
+        elif request.user.is_accountant:
+            return redirect("accountant_Dashboard")
+        elif request.user.is_library:
+            return redirect("librarian_Dashboard")
+        else:
+            return redirect("Faculty_Dashboard")
+
+@login_required(login_url='index')
+def attendance(request):
+    
+    if request.user.is_student:
+        notification = Notification.objects.filter(Q(whome="Student") | Q(whome="All")).filter(status=False)
+        notification_count = Notification.objects.filter(Q(whome="Student") | Q(whome="All")).filter(status=False).count()
+        user = request.user.id
+        
+        attendance = Attendance.objects.filter(student_id=user)
+        return render(request,"Student/view_attendance.html",{"attendance":attendance,"notification":notification,"notification_count":notification_count})
+    else:
+        if request.user.is_superuser:
+            return redirect("Hod_dashboard")
+        elif request.user.is_accountant:
+            return redirect("accountant_Dashboard")
+        elif request.user.is_library:
+            return redirect("librarian_Dashboard")
+        else:
+            return redirect("Faculty_Dashboard")

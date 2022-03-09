@@ -141,21 +141,24 @@ class Add_Book(models.Model):
     id = models.AutoField(primary_key=True)
     Book_name = models.CharField(max_length=100)
     publication = models.CharField(max_length=20)
-    quantity = models.CharField(max_length=100)
+    quantity = models.PositiveIntegerField()
     
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.Book_name
     
 
-
+STATUS = (
+    ('assign' ,'assign'),
+    ('recieve' ,'recieve')
+)
 class Assign_book(models.Model):
     id = models.AutoField(primary_key=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     book = models.ForeignKey(Add_Book, on_delete=models.CASCADE)
     assign_date = models.DateField()
     due_date = models.DateField()
-    status = models.BooleanField(default=True)
+    status = models.CharField(choices=STATUS,max_length=100)
     create_at = models.DateTimeField(auto_now_add=True)
 
 

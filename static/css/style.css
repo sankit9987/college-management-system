@@ -1,23 +1,4 @@
-/*
---------------------------
-  Css Indexing
---------------------------
-  Table of Css Content
-  ------- *** -------
 
---------------------------
-** @typography
---------------------------
-** Global style
---------------------------
-** Normalize
---------------------------
-
-
-*/
-/*-----------------
-    @Typography
------------------*/
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 
 /*====================
@@ -683,7 +664,6 @@ textarea.input-field {
   font-size: 12px;
   position: absolute;
   top: 0px;
-  right: 0px;
 }
 
 .header .right-eliment .list li.serch-form-area {
