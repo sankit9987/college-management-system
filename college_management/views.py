@@ -1,6 +1,5 @@
-from django.shortcuts import render,redirect
-from django.shortcuts import HttpResponse
-from .models import Faculty,Department,Subject,Accountant,Librarian,CustomeUser,Notification,Student,Add_Book,Assign_book,Year,Marks,Attendance,CustomeUser
+from django.shortcuts import render,redirect,HttpResponse
+from .models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -14,7 +13,6 @@ from datetime import date
 
 # Login 
 def index(request):
-    print(Password_confirm)
     if not request.user.is_authenticated:
         if request.method=='POST':
             username = request.POST['email']
@@ -92,6 +90,8 @@ def user_logout(request):
 @login_required(login_url='index')
 def Hod_dashboard(request):
     if request.user.is_superuser:
+        a = Faculty.objects.filter(subject__department__Department_name='IT')
+        print(a)
         faculty = Faculty.objects.all().count()
         accountant = Accountant.objects.all().count()
         librarian = Librarian.objects.all().count()
@@ -423,9 +423,11 @@ def librarian(request,email):
 @login_required(login_url='index')
 def accountant_Dashboard(request):
     if request.user.is_accountant:
+
+        s = Student.objects.all().count()
         notification = Notification.objects.filter(Q(whome="Accountant") | Q(whome="All")).filter(status=False)
         notification_count = Notification.objects.filter(Q(whome="Accountant") | Q(whome="All")).filter(status=False).count()
-        return render(request,"Accountant/accountant_Dashboard.html",{"notification":notification,"notification_count":notification_count})
+        return render(request,"Accountant/accountant_Dashboard.html",{"notification":notification,"notification_count":notification_count,'s':s})
     else:
         if request.user.is_faculty:
             return redirect("Faculty_Dashboard")
@@ -461,7 +463,9 @@ def add_student(request):
                 messages.success(request,"Add successfully!!!") 
                 return redirect("view_student")
         department = Department.objects.all()
-        return render(request,"Accountant/Add_student.html",{'department':department})
+        notification = Notification.objects.filter(Q(whome="Accountant") | Q(whome="All")).filter(status=False)
+        notification_count = Notification.objects.filter(Q(whome="Accountant") | Q(whome="All")).filter(status=False).count()
+        return render(request,"Accountant/Add_student.html",{"notification":notification,"notification_count":notification_count,'department':department})
     else:
         if request.user.is_faculty:
             return redirect("Faculty_Dashboard")
@@ -475,7 +479,9 @@ def add_student(request):
 def view_student(request):
     if request.user.is_accountant:
         student = Student.objects.all()
-        return render(request,"Accountant/view_student.html",{"student":student})
+        notification = Notification.objects.filter(Q(whome="Accountant") | Q(whome="All")).filter(status=False)
+        notification_count = Notification.objects.filter(Q(whome="Accountant") | Q(whome="All")).filter(status=False).count()
+        return render(request,"Accountant/view_student.html",{"notification":notification,"notification_count":notification_count,"student":student})
     else:
         if request.user.is_faculty:
             return redirect("Faculty_Dashboard")
@@ -519,9 +525,11 @@ def student(request,email):
             messages.success(request,"Update successfully!!!") 
             return redirect("view_student")
         studen = Student.objects.filter(email=email)
-        print(studen)
+
         year = Year.objects.all()
-        return render(request, "Accountant/view_studen_details.html",{"student":studen,"year":year})
+        notification = Notification.objects.filter(Q(whome="Accountant") | Q(whome="All")).filter(status=False)
+        notification_count = Notification.objects.filter(Q(whome="Accountant") | Q(whome="All")).filter(status=False).count()
+        return render(request, "Accountant/view_studen_details.html",{"notification":notification,"notification_count":notification_count,"student":studen,"year":year})
     else:
         if request.user.is_faculty:
             return redirect("Faculty_Dashboard")
@@ -551,7 +559,9 @@ def edit_accountant(request):
             Accountant.objects.filter(email=request.user).update(name=name,Gender=gender,Address=address,mobile_no=mobile,date_of_birth=dob)
             messages.success(request,"Update successfully!!!") 
             return redirect("accountant_Dashboard")
-        return render(request,"Accountant/edit_user.html")
+        notification = Notification.objects.filter(Q(whome="Accountant") | Q(whome="All")).filter(status=False)
+        notification_count = Notification.objects.filter(Q(whome="Accountant") | Q(whome="All")).filter(status=False).count()
+        return render(request,"Accountant/edit_user.html",{"notification":notification,"notification_count":notification_count})
     else:
         if request.user.is_faculty:
             return redirect("Faculty_Dashboard")
@@ -588,6 +598,40 @@ def view_assig_Book(request):
         notification_count = Notification.objects.filter(Q(whome="Librarian") | Q(whome="All")).filter(status=False).count()
         view = Assign_book.objects.filter(status="assign")
         return render(request,"Librarian/View_assign_book.html",{"view":view,"notification":notification,"notification_count":notification_count})
+    else:
+        if request.user.is_faculty:
+            return redirect("Faculty_Dashboard")
+        elif request.user.is_superuser:
+            return redirect("Hod_dashboard")
+        elif request.user.is_accountant:
+            return redirect("accountant_Dashboard")
+        else:
+            return redirect("Student_Dashboard")
+
+@login_required(login_url='index')
+def edit_librarian(request):
+    if request.user.is_library:
+        if request.method=="POST":
+            user = Librarian.objects.get(id=request.user.id)
+            name = request.POST['Name']
+            address = request.POST['address']
+            gender = request.POST['gender']
+            dob = request.POST['dob']
+            mobile = request.POST['mobile']
+            password = request.POST['password']
+            l=user.set_password(password)
+            user.save()
+            username = request.user.email
+            user=authenticate(email = username,password=password)
+            if user:
+                login(request, user)
+            Librarian.objects.filter(email=request.user).update(name=name,Gender=gender,Address=address,mobile_no=mobile,date_of_birth=dob)
+            messages.success(request,"Update successfully!!!") 
+            return redirect("accountant_Dashboard")
+        notification = Notification.objects.filter(Q(whome="Librarian") | Q(whome="All")).filter(status=False)
+        notification_count = Notification.objects.filter(Q(whome="Librarian") | Q(whome="All")).filter(status=False).count()
+        view = Assign_book.objects.filter(status="assign")
+        return render(request,"Librarian/edit_user.html",{"view":view,"notification":notification,"notification_count":notification_count})
     else:
         if request.user.is_faculty:
             return redirect("Faculty_Dashboard")
@@ -736,7 +780,12 @@ def edit_student(request):
 @login_required(login_url='index')
 def Faculty_Dashboard(request):
     if request.user.is_faculty:
-        return render(request,"Faculty/faculty_dashboard.html")
+        notification = Notification.objects.filter(Q(whome="Faculty") | Q(whome="All")).filter(status=False)
+        notification_count = Notification.objects.filter(Q(whome="Faculty") | Q(whome="All")).filter(status=False).count()
+        assign_book = Assign_book.objects.filter(status="assign").count()
+        book = Add_Book.objects.all().count()
+        return render(request,"Faculty/faculty_dashboard.html",{"notification":notification,"notification_count":notification_count,"assign_book":assign_book,"book":book})
+
     else:
         if request.user.is_superuser:
             return redirect("Hod_dashboard")
@@ -868,7 +917,9 @@ def save_attendance(request):
             for i in range(len(name)):
                 student = Student.objects.get(id=name[i])
                 Attendance.objects.create(subject=subject,student_id=student,status=status[i])
-        return render(request,"Faculty/Add_attendance.html")
+        notification = Notification.objects.filter(Q(whome="Faculty") | Q(whome="All")).filter(status=False)
+        notification_count = Notification.objects.filter(Q(whome="Faculty") | Q(whome="All")).filter(status=False).count()
+        return render(request,"Faculty/Add_attendance.html",{"notification":notification,"notification_count":notification_count})
     else:
         if request.user.is_superuser:
             return redirect("Hod_dashboard")
@@ -906,6 +957,24 @@ def attendance(request):
         
         attendance = Attendance.objects.filter(student_id=user)
         return render(request,"Student/view_attendance.html",{"attendance":attendance,"notification":notification,"notification_count":notification_count})
+    else:
+        if request.user.is_superuser:
+            return redirect("Hod_dashboard")
+        elif request.user.is_accountant:
+            return redirect("accountant_Dashboard")
+        elif request.user.is_library:
+            return redirect("librarian_Dashboard")
+        else:
+            return redirect("Faculty_Dashboard")
+
+@login_required(login_url='index')
+def marks(request):
+    if request.user.is_student:
+        notification = Notification.objects.filter(Q(whome="Student") | Q(whome="All")).filter(status=False)
+        notification_count = Notification.objects.filter(Q(whome="Student") | Q(whome="All")).filter(status=False).count()
+        user = request.user.id
+        m = Marks.objects.filter(student=user)
+        return render(request,"Student/view_marks.html",{"attendance":m,"notification":notification,"notification_count":notification_count})
     else:
         if request.user.is_superuser:
             return redirect("Hod_dashboard")

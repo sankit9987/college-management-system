@@ -65,10 +65,27 @@
 									<a id="notf_order" class="dropdown-toggle-1" href="javascript:;">
 										<i class="fa fa-commenting-o" aria-hidden="true"></i>
 										<span data-href="https://geniuscart.royalscripts.com/vendor/order/notf/count/22"
-											id="order-notf-count">0</span>
+											id="order-notf-count">{{notification_count}}</span>
 									</a>
 									<div class="dropdown-menu">
-										
+										<ul style="padding:0;">
+											{% for no in notification %}
+											<li>
+												<a href="#" class="d-flex"><img src="{{no.by.profile.url}}" style="max-width:16%; height:43px"> <div class="ms-3"><span
+													class="h6 d-block fw-normal mb-1 text-sm text-grey-600"><b>{% if no.by.is_superuser %}{{no.by.name}}(Admin)
+													  {% elif no.by.is_student %}{{no.by.name}}(Student)
+													  {% elif no.by.is_accountant %}{{no.by.name}}(Accountant)
+													  {% elif no.by.is_librarian %}{{no.by.name}}(Librarian)
+													  {% elif no.by.is_faculty %}{{no.by.name}}(Faculty)
+													  {% endif %}</b></span><small  class=" text-black-6000"> {{no.message}}</small>
+													  
+												  <p style="font-size:14px !important;" class="mb-0 small text-gray-600">{{no.created}}</p>
+												</div></a>
+											</li>
+											<hr>
+											{% endfor %}
+
+										</ul>
 									</div>
 								</li>
 								<li class="login-profile-area">
@@ -82,11 +99,7 @@
 										<div class="dropdownmenu-wrapper">
 											<ul>
 												<li>
-													<a href="{% url 'edit'%}"><i class="fa fa-user" aria-hidden="true"></i> Edit User</a>
-												</li>
-
-												<li>
-													<a href="https://geniuscart.royalscripts.com/vendor/profile"><i class="fa fa-key" aria-hidden="true" class="px-4"></i>Change Password</a>
+													<a href="{% url 'edit_student'%}"><i class="fa fa-user" aria-hidden="true"></i> Edit User</a>
 												</li>
 												<li>
 													<a href="{%url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
@@ -110,7 +123,7 @@
 						
 
 						<li>
-							<a href="{% url 'Faculty_Dashboard' %}" class="wave-effect "><i
+							<a href="{% url 'Student_Dashboard' %}" class="wave-effect "><i
 									class="fa fa-home mr-2"></i>Dashbord</a>
 						</li>
 						<li>
@@ -119,7 +132,7 @@
 						</li>
 
 						<li>
-							<a href="{% url 'Add_marks' %}" class="accordion-toggle wave-effect" >
+							<a href="{% url 'marks' %}" class="accordion-toggle wave-effect" >
                 <i class="fa fa-credit-card me-xl-2"></i>Marks  
 							</a>
 							

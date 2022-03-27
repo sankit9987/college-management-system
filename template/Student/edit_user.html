@@ -3,14 +3,11 @@
 {% block body %}
 <div class="container">
 	<div class="card">
-		<h2 class="card-title mx-5 mt-3 text-success">Edit </h2>
+		<h3 class="card-title mx-5 mt-3 text-dark text-center">Edit </h3>
 		<div class="card-body">
 			<form action="" method="POST" onsubmit="return pcheck2()" enctype= "multipart/form-data">
 				{% csrf_token %}
-				<div class="mb-3">
-					<img class="img-fluid rounded-circle avatar mb-3" src="{{request.user.profile.url}}">
-					<input name="profile" id="profile" type="file">
-				</div>
+
 				<div class="mb-3">
 					<label class="form-label" for="Name">Name</label>
 					<input class="form-control" value="{{request.user.name}}" placeholder="Enter Full Name" name="Name" id="Name" type="text" aria-describedby="namehelp">

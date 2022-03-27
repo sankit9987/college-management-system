@@ -48,8 +48,8 @@
                       <tr role="row">
                         <th class="sorting_disabled"  style="width: 167px;">Sr No.</th>
                         <th class="sorting_disabled"  style="width: 120px;">Subject</th>
-                        <th class="sorting_disabled"  style="width: 194px;">Date</th>
-                        <th class="sorting_disabled"  style="width: 93px;">Status</th>
+                        <th class="sorting_disabled"  style="width: 194px;">Mark</th>
+                        <th class="sorting_disabled"  style="width: 93px;">Faculty</th>
                       </tr>
                     </thead>
                     {% for attendance in attendance %}
@@ -57,8 +57,8 @@
                     <tr>
                       <th scope="row">{{forloop.counter}}</th>
                       <td>{{attendance.subject}}</td>
-                      <td>{{attendance.attendance_date}}</td>
-                      <td>{{attendance.status}}</td>
+                      <td>{{attendance.add_mark}}/75</td>
+                      <td>{{attendance.faculty.name}}</td>
                       
                     </tr>
                     {% endfor %}

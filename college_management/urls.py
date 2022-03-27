@@ -46,6 +46,7 @@ urlpatterns = [
     path("edit",views.edit_accountant,name="edit_accountant"),
 
     path('Librarian_Dashboard',views.librarian_Dashboard,name="librarian_Dashboard"),
+    path("edit-librarian",views.edit_librarian,name="edit_librarian"),
     path('Assign_Book',views.Assign_Book,name="Assign_Book"),
     path('view_assign_Book',views.view_assig_Book,name="view_assig_Book"),
     path('view-assign-Book/<int:id>',views.view_assign_book_details,name="view_assign_book_details"),
@@ -55,6 +56,7 @@ urlpatterns = [
     path('Student_Dashboard',views.Student_Dashboard,name="Student_Dashboard"),
     path("edit-profile",views.edit_student,name="edit_student"),
     path("attendance",views.attendance,name="attendance"),
+    path("marks",views.marks,name="marks"),
 
 
     path("Add_marks",views.Add_marks,name="Add_marks"),
